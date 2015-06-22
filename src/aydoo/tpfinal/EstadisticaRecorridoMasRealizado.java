@@ -38,16 +38,7 @@ public String generarEstadistica(List<Recorrido> listaDeRecorridos){
 				
 			}
 			
-			int maximo = Collections.max(mapa.values());
-			
-			 for (Entry<String, Integer> entry : mapa.entrySet()) {  
-		            
-				 if (entry.getValue()==maximo) {
-		                
-					 recorridoMasRealizado = (entry.getKey());     
-		         
-				 }
-			 }
+			recorridoMasRealizado = buscarMaximo(recorridoMasRealizado, mapa);
 		}
 		
 		catch (Exception e){
@@ -59,5 +50,20 @@ public String generarEstadistica(List<Recorrido> listaDeRecorridos){
 		 return recorridoMasRealizado;
 		
 	}
+
+private String buscarMaximo(String recorridoMasRealizado,
+		Map<String, Integer> mapa) {
+	int maximo = Collections.max(mapa.values());
+	
+	 for (Entry<String, Integer> entry : mapa.entrySet()) {  
+	        
+		 if (entry.getValue()==maximo) {
+	            
+			 recorridoMasRealizado = (entry.getKey());     
+	     
+		 }
+	 }
+	return recorridoMasRealizado;
+}
 
 }

@@ -31,17 +31,7 @@ public class EstadisticaBicicletaMenosUsada extends Estadistica {
 
 		}
 
-		int minimo = Collections.min(mapa.values());
-
-		for (Entry<String, Integer> entry : mapa.entrySet()) {  
-
-			if (entry.getValue()==minimo) {
-
-				bicicletaId = entry.getKey();     
-
-			}
-
-		}
+		bicicletaId = buscarMinimo(mapa, bicicletaId);
 
 	}
 
@@ -53,6 +43,21 @@ public class EstadisticaBicicletaMenosUsada extends Estadistica {
 
 	return bicicletaId;
 
-	} 
+	}
+	
+	private String buscarMinimo(Map<String, Integer> mapa, String clave) {
+		int minimo = Collections.min(mapa.values());
+
+		for (Entry<String, Integer> entry : mapa.entrySet()) {  
+
+			if (entry.getValue()==minimo) {
+
+				clave = entry.getKey();     
+
+			}
+
+		}
+		return clave;
+	}
 
 }

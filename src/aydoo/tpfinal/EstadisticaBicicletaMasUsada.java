@@ -30,17 +30,7 @@ public class EstadisticaBicicletaMasUsada extends Estadistica {
 
 			}
 
-			int maximo = Collections.max(mapa.values());
-
-			for (Entry<String, Integer> entry : mapa.entrySet()) {  
-
-				if (entry.getValue()==maximo) {
-			
-				bicicletaId = entry.getKey();     
-
-				}
-
-			}
+			bicicletaId = buscarMaximo(mapa, bicicletaId);
 		
 		}
 		
@@ -52,6 +42,22 @@ public class EstadisticaBicicletaMasUsada extends Estadistica {
 		
 			
 			return bicicletaId;
-	} 
+	}
+
+	private String buscarMaximo(Map<String, Integer> mapa, String clave) {
+		int maximo = Collections.max(mapa.values());
+
+		for (Entry<String, Integer> entry : mapa.entrySet()) {  
+
+			if (entry.getValue()==maximo) {
+		
+			clave = entry.getKey();     
+
+			}
+
+		}
+		return clave;
+	}
+
 
 }
