@@ -14,16 +14,19 @@ public abstract class ProcesadorDeDatos {
     public abstract List<Recorrido> procesarDirectorioDeEntrada();
 
     protected List<File> obtenerArchivosZipDentroDelDirectorio(){
+        List<File> listaDeZips = new ArrayList<>();
         File directorio = new File (this.directorioDeEntrada);
 
-        File[] listaDeArchivos = directorio.listFiles();
-        List<File> listaDeZips = new ArrayList<>();
+        if(directorio.exists()){
+            File[] listaDeArchivos = directorio.listFiles();
 
-        for (File file : listaDeArchivos){
-            if (file.isFile()){
 
-                if(file.getName().endsWith(".zip")){
-                    listaDeZips.add(file);
+            for (File file : listaDeArchivos){
+                if (file.isFile()){
+
+                    if(file.getName().endsWith(".zip")){
+                        listaDeZips.add(file);
+                    }
                 }
             }
         }
