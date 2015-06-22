@@ -7,6 +7,10 @@ import java.util.TreeMap;
 import java.util.Map.Entry;
 
 public class EstadisticaRecorridoMasRealizado extends Estadistica {
+
+	public EstadisticaRecorridoMasRealizado() {
+		this.nombreEstadistica = "Recorrido mas realizado";
+	}
 	
 public String generarEstadistica(List<Recorrido> listaDeRecorridos){
 		

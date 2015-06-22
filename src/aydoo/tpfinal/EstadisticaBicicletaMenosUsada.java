@@ -7,6 +7,10 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 public class EstadisticaBicicletaMenosUsada extends Estadistica {
+
+	public EstadisticaBicicletaMenosUsada() {
+		this.nombreEstadistica = "Bicicletas menos usadas";
+	}
 	
 	@Override
 	public Object generarEstadistica(List<Recorrido> listaDeRecorridos){Map<String,Integer> mapa = new TreeMap<String,Integer>();
