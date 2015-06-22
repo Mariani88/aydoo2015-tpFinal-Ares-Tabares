@@ -13,6 +13,7 @@
         <dependency org="net.sourceforge.cobertura" name="cobertura" rev="2.1.1" conf="build->default"/>
         
         <dependency org="pmd" name="pmd" rev="4.3" conf="analysis->default"/>
+        <dependency org="commons-io" name="commons-io" rev="2.4" conf="build->default"/>
         
         
         <!--
