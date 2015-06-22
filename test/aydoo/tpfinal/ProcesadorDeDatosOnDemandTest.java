@@ -70,4 +70,25 @@ public class ProcesadorDeDatosOnDemandTest {
         Assert.assertEquals(1,procesadorDeDatos.procesarDirectorioDeEntrada().size());
 
     }
+    @Test
+    public void cuandoElDirectorioTieneDosZipConCon2CSVEnTotalConCuatroLineasEnTotalLaListaDeRecorridosDebeTenerCuatroRecorridos(){
+        String directorio;
+
+        if (System.getProperty("os.name").equals("Linux")){
+
+            directorio = "archivosAProcesar/directorioDePruebaConDosZip";
+
+        }
+
+        else{
+
+            directorio = "C:\\GitProjects\\RepositorioDeArchivos\\";
+
+        }
+        ProcesadorDeDatos procesadorDeDatos = new ProcesadorDeDatosOnDemand(directorio);
+
+        Assert.assertEquals(4,procesadorDeDatos.procesarDirectorioDeEntrada().size());
+
+    }
+
 }
