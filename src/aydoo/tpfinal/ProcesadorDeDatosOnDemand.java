@@ -45,7 +45,6 @@ public class ProcesadorDeDatosOnDemand extends ProcesadorDeDatos {
             while(contenidoDelZip.hasMoreElements()){
                 ZipEntry zipEntry = (ZipEntry) contenidoDelZip.nextElement();
                 try {
-                    //String contenidoDelCSV = zip.getInputStream(zipEntry).toString();
                     String contenidoDelCSV = IOUtils.toString(zip.getInputStream(zipEntry), StandardCharsets.UTF_8.name());
                     listaDeRecorridos.addAll(this.generarRecorridos(contenidoDelCSV));
                 } catch (IOException e) {
