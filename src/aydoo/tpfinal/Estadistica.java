@@ -2,11 +2,16 @@ package aydoo.tpfinal;
 
 import java.util.List;
 
-public class Estadistica {
+public abstract class Estadistica {
 
-	public Object generarEstadistica(List<Recorrido> listaDeRecorridos) {
+	protected String nombreEstadistica;
+
+	protected Object generarEstadistica(List<Recorrido> listaDeRecorridos) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
+	public String getNombreEstadistica() {
+		return nombreEstadistica;
+	}
 }
