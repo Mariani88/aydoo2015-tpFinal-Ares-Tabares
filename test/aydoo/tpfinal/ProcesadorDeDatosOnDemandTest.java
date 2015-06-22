@@ -41,7 +41,7 @@ public class ProcesadorDeDatosOnDemandTest {
 
         else{
 
-            directorio = "C:\\GitProjects\\RepositorioDeArchivos\\";
+            directorio = "C:\\GitProjects\\RepositorioDeArchivos\\directorioInexistente";
 
         }
         ProcesadorDeDatos procesadorDeDatos = new ProcesadorDeDatosOnDemand(directorio);
