@@ -66,9 +66,11 @@ public class ProcesadorDeDatosOnDemand extends ProcesadorDeDatos {
         Scanner scanner = new Scanner(contenidoDelCSV);
         while (scanner.hasNextLine()) {
             String linea = scanner.nextLine();
-            String[] lineaSeparadaPorComas = linea.split(";");
-            Recorrido recorrido = new Recorrido(lineaSeparadaPorComas[0],lineaSeparadaPorComas[1],lineaSeparadaPorComas[2],lineaSeparadaPorComas[3],lineaSeparadaPorComas[4],lineaSeparadaPorComas[5],lineaSeparadaPorComas[6],lineaSeparadaPorComas[7],lineaSeparadaPorComas[8]);
-            listaDeRecorridos.add(recorrido);
+            if (!linea.equals("usuarioid;bicicletaid;origenfecha;origenestacionid;origennombre;destinofecha;destinoestacionid;destinonombre;tiempouso")){
+                String[] lineaSeparadaPorComas = linea.split(";");
+                Recorrido recorrido = new Recorrido(lineaSeparadaPorComas[0],lineaSeparadaPorComas[1],lineaSeparadaPorComas[2],lineaSeparadaPorComas[3],lineaSeparadaPorComas[4],lineaSeparadaPorComas[5],lineaSeparadaPorComas[6],lineaSeparadaPorComas[7],lineaSeparadaPorComas[8]);
+                listaDeRecorridos.add(recorrido);
+            }
         }
         return listaDeRecorridos;
     }
