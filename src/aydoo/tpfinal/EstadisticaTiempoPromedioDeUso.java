@@ -1,5 +1,6 @@
 package aydoo.tpfinal;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class EstadisticaTiempoPromedioDeUso extends Estadistica {
@@ -8,8 +9,9 @@ public class EstadisticaTiempoPromedioDeUso extends Estadistica {
 		this.nombreEstadistica = "Tiempo promedio de uso";
 	}
 	
-	public Object generarEstadistica(List<Recorrido> listaDeRecorridos){
+	public List<String> generarEstadistica(List<Recorrido> listaDeRecorridos){
 		
+		List<String> listaDeResultados = new LinkedList<String>();
 		int sumaDeTiempoEnRecorridos=0;
 		
 		try {
@@ -20,7 +22,7 @@ public class EstadisticaTiempoPromedioDeUso extends Estadistica {
 				
 			}
 		
-			sumaDeTiempoEnRecorridos = sumaDeTiempoEnRecorridos/listaDeRecorridos.size();
+			listaDeResultados.add(Integer.toString(sumaDeTiempoEnRecorridos/listaDeRecorridos.size()));
 			
 		}
 		
@@ -30,7 +32,7 @@ public class EstadisticaTiempoPromedioDeUso extends Estadistica {
 			
 		}
 		
-		return sumaDeTiempoEnRecorridos;
+		return listaDeResultados;
 		
 	}
 

@@ -6,7 +6,7 @@ public abstract class Estadistica {
 
 	protected String nombreEstadistica;
 
-	protected Object generarEstadistica(List<Recorrido> listaDeRecorridos) {
+	protected List<String> generarEstadistica(List<Recorrido> listaDeRecorridos) {
 		// TODO Auto-generated method stub
 		return null;
 	}

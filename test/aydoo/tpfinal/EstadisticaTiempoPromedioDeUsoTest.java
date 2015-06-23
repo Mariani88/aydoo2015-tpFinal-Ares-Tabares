@@ -26,17 +26,17 @@ public class EstadisticaTiempoPromedioDeUsoTest {
 		
 		Estadistica tiempoPromedio = new EstadisticaTiempoPromedioDeUso();
 				
-		Assert.assertEquals(58, tiempoPromedio.generarEstadistica(listaDeRecorridos));
+		Assert.assertTrue(tiempoPromedio.generarEstadistica(listaDeRecorridos).contains("58"));
 			
 	}
 	
 	@Test
-	public void cuandoGeneroUnaEstadisticaConUnaListaVaciaDebeLanzaeUnaExcepcionYDevolver0(){
+	public void cuandoGeneroUnaEstadisticaConUnaListaVaciaDebeLanzaeUnaExcepcionYDevolverUnaListaVacia(){
 		
 		List<Recorrido> listaDeRecorridos = new LinkedList<Recorrido>();
 		Estadistica tiempoPromedio = new EstadisticaTiempoPromedioDeUso();
 		
-		Assert.assertEquals(0, tiempoPromedio.generarEstadistica(listaDeRecorridos));
+		Assert.assertTrue(tiempoPromedio.generarEstadistica(listaDeRecorridos).isEmpty());
 		
 	}
 
