@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import static java.nio.file.StandardCopyOption.*;
 
 public class ProcesadorEstadistico {
 
@@ -95,6 +96,22 @@ public class ProcesadorEstadistico {
             listaDeRecorridos.addAll(this.procesarArchivoZip(archivoZip.toString()));
         }
         this.guardarReporteEstadisticasADisco("salidaUnica.yml",this.generarReporteEstadisticas(listaDeRecorridos));
+    }
+
+    public void procesarModoDaemon(List<String> archivosAProcesar){
+        for (String archivoAProcesar: archivosAProcesar ){
+            List<Recorrido> listaDeRecorridos = new ArrayList();
+            listaDeRecorridos.addAll(this.procesarArchivoZip(archivoAProcesar));
+            String[] archivosAProcesarSeparado = archivoAProcesar.split("/");
+            this.guardarReporteEstadisticasADisco(archivosAProcesarSeparado[archivosAProcesarSeparado.length - 1] + ".salida.yml",this.generarReporteEstadisticas(listaDeRecorridos));
+            Path origen = Paths.get(archivoAProcesar);
+            Path destino = Paths.get(this.directorioDeArchivosProcesados + archivosAProcesarSeparado[archivosAProcesarSeparado.length - 1]);
+            try {
+                Files.move(origen,destino,REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private List<File> obtenerArchivosZipDentroDelDirectorio(){

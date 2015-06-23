@@ -4,8 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.*;
-
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -47,7 +45,7 @@ public class ProcesadorEstadisticoTest {
     }*/
 
     @Test
-    public void cuandoElDirectorioDeEntradaTieneContenidoDebeGenerarUnArchivoDeSalidaConTamanoMayorACero() throws IOException {
+    public void cuandoElDirectorioDeEntradaTieneContenidoElProcesadorOnDemandDebeGenerarUnArchivoDeSalidaConTamanoMayorACero() throws IOException {
         List<Estadistica> listaDeEstadisticas = new ArrayList<>();
         EstadisticaBicicletaMasUsada estadisticaBiciMasUsada = new EstadisticaBicicletaMasUsada();
         EstadisticaBicicletaMenosUsada estadisticaBicicletaMenosUsada = new EstadisticaBicicletaMenosUsada();
@@ -64,5 +62,44 @@ public class ProcesadorEstadisticoTest {
         Path reporte = Paths.get("reportes/salidaUnica.yml");
 
         Assert.assertTrue(Files.size(reporte) > 0);
+    }
+
+/*    @Test
+    public void testDaemon(){
+        List<Estadistica> listaDeEstadisticas = new ArrayList<>();
+        EstadisticaBicicletaMasUsada estadisticaBiciMasUsada = new EstadisticaBicicletaMasUsada();
+        EstadisticaBicicletaMenosUsada estadisticaBicicletaMenosUsada = new EstadisticaBicicletaMenosUsada();
+        EstadisticaRecorridoMasRealizado estadisticaRecorridoMasRealizado = new EstadisticaRecorridoMasRealizado();
+        EstadisticaTiempoPromedioDeUso estadisticaTiempoPromedioDeUso = new EstadisticaTiempoPromedioDeUso();
+
+        listaDeEstadisticas.add(estadisticaBiciMasUsada);
+        listaDeEstadisticas.add(estadisticaBicicletaMenosUsada);
+        listaDeEstadisticas.add(estadisticaRecorridoMasRealizado);
+        listaDeEstadisticas.add(estadisticaTiempoPromedioDeUso);
+
+        ProcesadorEstadistico procesadorEstadistico = new ProcesadorEstadistico(listaDeEstadisticas);
+        Daemon daemon = new Daemon("archivosAProcesar/directorioDePruebaConDosZip",procesadorEstadistico);
+        daemon.monitorear();
+    }*/
+
+    @Test
+    public void cuandoSePasaUnaListaDeDosArchivosElProcesadorOnDemandDebeGenerarDosArchivosDeSalidaConTamanoMayorACero(){
+        List<Estadistica> listaDeEstadisticas = new ArrayList<>();
+        EstadisticaBicicletaMasUsada estadisticaBiciMasUsada = new EstadisticaBicicletaMasUsada();
+        EstadisticaBicicletaMenosUsada estadisticaBicicletaMenosUsada = new EstadisticaBicicletaMenosUsada();
+        EstadisticaRecorridoMasRealizado estadisticaRecorridoMasRealizado = new EstadisticaRecorridoMasRealizado();
+        EstadisticaTiempoPromedioDeUso estadisticaTiempoPromedioDeUso = new EstadisticaTiempoPromedioDeUso();
+
+        listaDeEstadisticas.add(estadisticaBiciMasUsada);
+        listaDeEstadisticas.add(estadisticaBicicletaMenosUsada);
+        listaDeEstadisticas.add(estadisticaRecorridoMasRealizado);
+        listaDeEstadisticas.add(estadisticaTiempoPromedioDeUso);
+
+        List<String> listaDeArchivosAProcesar = new ArrayList<>();
+        listaDeArchivosAProcesar.add("archivosAProcesar/directorioDePruebaConDosZip/CSVConTresLineas.zip");
+        listaDeArchivosAProcesar.add("archivosAProcesar/directorioDePruebaConDosZip/CSVConUnaLinea.zip");
+
+        ProcesadorEstadistico procesadorEstadistico = new ProcesadorEstadistico(listaDeEstadisticas);
+        procesadorEstadistico.procesarModoDaemon(listaDeArchivosAProcesar);
     }
 }
