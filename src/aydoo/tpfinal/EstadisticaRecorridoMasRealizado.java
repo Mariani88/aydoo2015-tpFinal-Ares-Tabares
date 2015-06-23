@@ -1,6 +1,7 @@
 package aydoo.tpfinal;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -13,9 +14,9 @@ public class EstadisticaRecorridoMasRealizado extends Estadistica {
 		this.nombreCampos = new String[] {"id origen","id destino"};
 	}
 	
-public String generarEstadistica(List<Recorrido> listaDeRecorridos){
+public List<String> generarEstadistica(List<Recorrido> listaDeRecorridos){
 		
-		String recorridoMasRealizado=null;
+		List<String> listaDeResultados = new LinkedList<String>();
 
 		try {
 
@@ -43,7 +44,7 @@ public String generarEstadistica(List<Recorrido> listaDeRecorridos){
 				
 			}
 			
-			recorridoMasRealizado = buscarMaximo(recorridoMasRealizado, mapa);
+			listaDeResultados = buscarMaximo(mapa);
 		}
 		
 		catch (Exception e){
@@ -52,23 +53,25 @@ public String generarEstadistica(List<Recorrido> listaDeRecorridos){
 			
 		}
 		 
-		 return recorridoMasRealizado;
+		 return listaDeResultados;
 		
 	}
 
-private String buscarMaximo(String recorridoMasRealizado,
-		Map<String, Integer> mapa) {
-	int maximo = Collections.max(mapa.values());
+	private List<String> buscarMaximo(Map<String, Integer> mapa) {
+		
+		List<String> listaDeResultados = new LinkedList<String>();
+		int maximo = Collections.max(mapa.values());
 	
-	 for (Entry<String, Integer> entry : mapa.entrySet()) {  
-	        
-		 if (entry.getValue()==maximo) {
-	            
-			 recorridoMasRealizado = (entry.getKey());     
-	     
+		 for (Entry<String, Integer> entry : mapa.entrySet()) {  
+		        
+			 if (entry.getValue()==maximo) {
+		            
+				 listaDeResultados.add(entry.getKey());     
+		     
+			 }
 		 }
-	 }
-	return recorridoMasRealizado;
+	
+		 return listaDeResultados;
 }
 
 }

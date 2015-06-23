@@ -1,5 +1,6 @@
 package aydoo.tpfinal;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -13,10 +14,11 @@ public class EstadisticaBicicletaMasUsada extends Estadistica {
 	}
 	
 	@Override
-	public Object generarEstadistica(List<Recorrido> listaDeRecorridos){
+	public List<String> generarEstadistica(List<Recorrido> listaDeRecorridos){
+		
+		List<String> listaDeResultados = new LinkedList<String>();
 		Map<String,Integer> mapa = new TreeMap<String,Integer>();
 	
-		String bicicletaId=null;
 		
 		try {
 	
@@ -35,8 +37,8 @@ public class EstadisticaBicicletaMasUsada extends Estadistica {
 				}
 
 			}
-
-			bicicletaId = buscarMaximo(mapa, bicicletaId);
+			
+			listaDeResultados = buscarMaximo(mapa);
 		
 		}
 		
@@ -47,22 +49,28 @@ public class EstadisticaBicicletaMasUsada extends Estadistica {
 		}
 		
 			
-			return bicicletaId;
+			return listaDeResultados;
+			
 	}
 
-	private String buscarMaximo(Map<String, Integer> mapa, String clave) {
+	private List<String> buscarMaximo(Map<String, Integer> mapa) {
+		
+		List<String> listaDeResultados = new LinkedList<String>();
+		
 		int maximo = Collections.max(mapa.values());
 
 		for (Entry<String, Integer> entry : mapa.entrySet()) {  
 
 			if (entry.getValue()==maximo) {
 		
-			clave = entry.getKey();     
+				listaDeResultados.add(entry.getKey());     
 
 			}
 
 		}
-		return clave;
+	
+		return listaDeResultados;
+	
 	}
 
 
