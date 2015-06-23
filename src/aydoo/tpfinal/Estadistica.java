@@ -5,6 +5,7 @@ import java.util.List;
 public abstract class Estadistica {
 
 	protected String nombreEstadistica;
+	protected String[] nombreCampos;
 
 	protected Object generarEstadistica(List<Recorrido> listaDeRecorridos) {
 		// TODO Auto-generated method stub

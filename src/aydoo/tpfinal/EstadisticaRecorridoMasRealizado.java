@@ -10,6 +10,7 @@ public class EstadisticaRecorridoMasRealizado extends Estadistica {
 
 	public EstadisticaRecorridoMasRealizado() {
 		this.nombreEstadistica = "Recorrido mas realizado";
+		this.nombreCampos = new String[] {"id origen","id destino"};
 	}
 	
 public String generarEstadistica(List<Recorrido> listaDeRecorridos){

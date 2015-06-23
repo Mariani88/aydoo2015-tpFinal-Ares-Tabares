@@ -6,6 +6,7 @@ public class EstadisticaTiempoPromedioDeUso extends Estadistica {
 
 	public EstadisticaTiempoPromedioDeUso() {
 		this.nombreEstadistica = "Tiempo promedio de uso";
+		this.nombreCampos = new String[] {""};
 	}
 	
 	public Object generarEstadistica(List<Recorrido> listaDeRecorridos){

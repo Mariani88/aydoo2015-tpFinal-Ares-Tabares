@@ -10,6 +10,7 @@ public class EstadisticaBicicletaMenosUsada extends Estadistica {
 
 	public EstadisticaBicicletaMenosUsada() {
 		this.nombreEstadistica = "Bicicletas menos usadas";
+		this.nombreCampos = new String[] {"id"};
 	}
 	
 	@Override
