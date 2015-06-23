@@ -103,6 +103,11 @@
             </fileset>
             <report format="frames" todir="${reports.html.dir}" />
         </junitreport>
+		<move todir="archivosAProcesar/directorioDePruebaConDosZip">
+			<fileset dir="archivosProcesados/">
+				<include name="*.zip"/>
+			</fileset>
+		</move>
     </target>
 
 	<target name="init">
