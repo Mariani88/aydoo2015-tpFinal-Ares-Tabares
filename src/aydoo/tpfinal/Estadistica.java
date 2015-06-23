@@ -15,4 +15,8 @@ public abstract class Estadistica {
 	public String getNombreEstadistica() {
 		return nombreEstadistica;
 	}
+
+	public String[] getNombreCampos() {
+		return nombreCampos;
+	}
 }
