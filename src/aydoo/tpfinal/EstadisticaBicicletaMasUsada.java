@@ -81,7 +81,7 @@ public class EstadisticaBicicletaMasUsada extends Estadistica {
 		
 		for (String string : lista){
 			
-			listaFormateada.add("	id: " + string);	
+			listaFormateada.add("    id: " + string);	
 			
 		} 
 

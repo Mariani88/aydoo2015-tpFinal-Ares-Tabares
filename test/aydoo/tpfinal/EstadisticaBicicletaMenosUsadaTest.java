@@ -86,7 +86,7 @@ public class EstadisticaBicicletaMenosUsadaTest {
 	
 		Assert.assertTrue(menosUsada.generarListaEnFormatoYML(lista).size()==2);
 		Assert.assertTrue(menosUsada.generarListaEnFormatoYML(lista).contains("Bicicletas menos usadas:"));
-		Assert.assertTrue(menosUsada.generarListaEnFormatoYML(lista).contains("	id: 350"));
+		Assert.assertTrue(menosUsada.generarListaEnFormatoYML(lista).contains("    id: 350"));
 		
 	}
 

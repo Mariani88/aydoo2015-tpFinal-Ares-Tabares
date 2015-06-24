@@ -6,15 +6,9 @@ public abstract class Estadistica {
 
 	protected String nombreEstadistica;
 
-	protected List<String> generarEstadistica(List<Recorrido> listaDeRecorridos) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	protected abstract List<String> generarEstadistica(List<Recorrido> listaDeRecorridos);
 
-	public List<String> generarListaEnFormatoYML(List<String> lista) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract List<String> generarListaEnFormatoYML(List<String> lista);
 	
 	public String getNombreEstadistica() {
 		return nombreEstadistica;
