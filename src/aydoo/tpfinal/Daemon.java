@@ -1,6 +1,5 @@
 package aydoo.tpfinal;
 
-
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -11,7 +10,7 @@ import java.util.List;
 
 public class Daemon {
 
-    private String directorioAMonitorear;
+    private final String directorioAMonitorear;
     ProcesadorEstadistico procesadorEstadistico;
 
     public Daemon(String directorioAMonitorear, ProcesadorEstadistico procesadorEstadistico){
@@ -27,7 +26,7 @@ public class Daemon {
         List<String> contenidoActualDelDirectorio;
         loop = true;
 
-        if (contenidoInicialDelDirectorio.size() > 0 ){
+        if (!contenidoInicialDelDirectorio.isEmpty()){
             this.procesadorEstadistico.procesarModoDaemon(contenidoInicialDelDirectorio);
             contenidoInicialDelDirectorio = this.getContenidoDelDirectorio(this.directorioAMonitorear);
         }
@@ -39,7 +38,7 @@ public class Daemon {
 
                 if(!contenidoActualDelDirectorio.equals(contenidoInicialDelDirectorio)){
                     List<String> archivosNuevos = this.encontrarArchivosNuevos(contenidoInicialDelDirectorio,contenidoActualDelDirectorio);
-                    if(archivosNuevos.size() > 0){
+                    if(!archivosNuevos.isEmpty()){
                         this.procesadorEstadistico.procesarModoDaemon(archivosNuevos);
                     }
                     contenidoInicialDelDirectorio = contenidoActualDelDirectorio;
