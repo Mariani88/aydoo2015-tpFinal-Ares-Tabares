@@ -29,16 +29,15 @@ public List<String> generarEstadistica(List<Recorrido> listaDeRecorridos){
 				stringTemporal = recorrido.getOrigenEstacionId() + ";" + recorrido.getDestinoEstacionId();
 				
 				
-				if(!mapa.containsKey(stringTemporal)){
+				if(mapa.containsKey(stringTemporal)){
 					
-					mapa.put(stringTemporal,1);
-					
-					
+					mapa.put(stringTemporal, mapa.get(stringTemporal)+1);
+										
 				}
 				
 				else{
 					
-					mapa.put(stringTemporal, mapa.get(stringTemporal)+1);
+					mapa.put(stringTemporal,1);
 					
 				}
 				

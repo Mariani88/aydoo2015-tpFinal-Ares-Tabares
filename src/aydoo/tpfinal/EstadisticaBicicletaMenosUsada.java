@@ -25,15 +25,15 @@ public class EstadisticaBicicletaMenosUsada extends Estadistica {
 
 			for(Recorrido recorrido : listaDeRecorridos){
 	
-				if(!mapa.containsKey(recorrido.getBicicletaId())){
+				if(mapa.containsKey(recorrido.getBicicletaId())){
 	
-					mapa.put(recorrido.getBicicletaId(),1);
+					mapa.put(recorrido.getBicicletaId(), mapa.get(recorrido.getBicicletaId())+1);
 	
 				}
 	
 				else{
 	
-					mapa.put(recorrido.getBicicletaId(), mapa.get(recorrido.getBicicletaId())+1);
+					mapa.put(recorrido.getBicicletaId(),1);
 	
 				}
 	

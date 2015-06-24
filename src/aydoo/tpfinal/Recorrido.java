@@ -9,15 +9,15 @@ import java.util.GregorianCalendar;
 
 public class Recorrido {
 
-    private String usuarioId;
-    private String bicicletaId;
-    private GregorianCalendar origenFecha;
-    private String origenEstacionId;
-    private String origenNombre;
-    private GregorianCalendar destinoFecha;
-    private String destinoEstacionId;
-    private String destinoNombre;
-    private int tiempoDeUso;
+    private final String usuarioId;
+    private final String bicicletaId;
+    private final GregorianCalendar origenFecha;
+    private final String origenEstacionId;
+    private final String origenNombre;
+    private final GregorianCalendar destinoFecha;
+    private final String destinoEstacionId;
+    private final String destinoNombre;
+    private final int tiempoDeUso;
 
 
 
