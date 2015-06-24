@@ -26,7 +26,7 @@ public class EstadisticaTiempoPromedioDeUsoTest {
 		
 		Estadistica tiempoPromedio = new EstadisticaTiempoPromedioDeUso();
 				
-		Assert.assertTrue(tiempoPromedio.generarEstadistica(listaDeRecorridos).contains("58"));
+		Assert.assertTrue(tiempoPromedio.generarEstadistica(listaDeRecorridos).contains("58.0"));
 			
 	}
 	
@@ -37,6 +37,7 @@ public class EstadisticaTiempoPromedioDeUsoTest {
 		Estadistica tiempoPromedio = new EstadisticaTiempoPromedioDeUso();
 		
 		Assert.assertTrue(tiempoPromedio.generarEstadistica(listaDeRecorridos).isEmpty());
+
 		
 	}
 	
@@ -60,7 +61,8 @@ public class EstadisticaTiempoPromedioDeUsoTest {
 		List<String> lista = tiempoPromedio.generarEstadistica(listaDeRecorridos);
 	
 		Assert.assertTrue(tiempoPromedio.generarListaEnFormatoYML(lista).size()==1);
-		Assert.assertTrue(tiempoPromedio.generarListaEnFormatoYML(lista).contains("Tiempo promedio de uso: 58"));
+		Assert.assertTrue(tiempoPromedio.generarListaEnFormatoYML(lista).contains("Tiempo promedio de uso: 58.2"));
+		
 		
 	}
 

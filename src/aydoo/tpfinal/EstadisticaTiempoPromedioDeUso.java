@@ -14,7 +14,7 @@ public class EstadisticaTiempoPromedioDeUso extends Estadistica {
 	public List<String> generarEstadistica(List<Recorrido> listaDeRecorridos){
 		
 		List<String> listaDeResultados = new LinkedList<String>();
-		int sumaDeTiempoEnRecorridos=0;
+		double sumaDeTiempoEnRecorridos=0.0;
 		
 		try {
 		
@@ -24,7 +24,11 @@ public class EstadisticaTiempoPromedioDeUso extends Estadistica {
 				
 			}
 		
-			listaDeResultados.add(Integer.toString(sumaDeTiempoEnRecorridos/listaDeRecorridos.size()));
+			if (sumaDeTiempoEnRecorridos>0){
+				
+				listaDeResultados.add(Double.toString(sumaDeTiempoEnRecorridos/listaDeRecorridos.size()));
+			
+			}
 			
 		}
 		
