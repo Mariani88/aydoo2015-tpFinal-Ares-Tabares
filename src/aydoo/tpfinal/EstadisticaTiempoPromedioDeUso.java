@@ -6,8 +6,9 @@ import java.util.List;
 public class EstadisticaTiempoPromedioDeUso extends Estadistica {
 
 	public EstadisticaTiempoPromedioDeUso() {
+		
 		this.nombreEstadistica = "Tiempo promedio de uso";
-		this.nombreCampos = new String[] {""};
+
 	}
 	
 	public List<String> generarEstadistica(List<Recorrido> listaDeRecorridos){
@@ -34,6 +35,15 @@ public class EstadisticaTiempoPromedioDeUso extends Estadistica {
 		}
 		
 		return listaDeResultados;
+		
+	}
+	
+	public List<String> generarListaEnFormatoYML(List<String> lista) {
+
+		List<String> listaFormateada = new LinkedList<String>();
+		listaFormateada.add(nombreEstadistica + ": " + lista.get(0));
+		
+		return listaFormateada;
 		
 	}
 

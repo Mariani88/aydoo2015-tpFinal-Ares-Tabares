@@ -10,8 +10,9 @@ import java.util.Map.Entry;
 public class EstadisticaRecorridoMasRealizado extends Estadistica {
 
 	public EstadisticaRecorridoMasRealizado() {
+		
 		this.nombreEstadistica = "Recorrido mas realizado";
-		this.nombreCampos = new String[] {"id origen","id destino"};
+
 	}
 	
 public List<String> generarEstadistica(List<Recorrido> listaDeRecorridos){
@@ -73,5 +74,21 @@ public List<String> generarEstadistica(List<Recorrido> listaDeRecorridos){
 	
 		 return listaDeResultados;
 }
+	
+	public List<String> generarListaEnFormatoYML(List<String> lista){
+		
+		List<String> listaFormateada = new LinkedList<String>();
+		listaFormateada.add(nombreEstadistica + ":");
+		
+		for (String string : lista){
+			
+			String[] partes = string.split(";");
+			listaFormateada.add("    id origen: "+ partes[0]);
+			listaFormateada.add("    id destino: "+ partes[1]);
+			
+		}
+		
+		return listaFormateada;
+	}
 
 }

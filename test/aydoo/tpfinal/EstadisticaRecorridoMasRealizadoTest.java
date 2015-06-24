@@ -63,5 +63,34 @@ public class EstadisticaRecorridoMasRealizadoTest {
 		Assert.assertTrue(recorridoMasRealizado.generarEstadistica(listaDeRecorridos).contains("7;8"));
 		
 	}
+	
+	@Test
+	public void generarUnaEstadisticaEnFormatoYMLDebeContenerLosRecorridosEnElFormatoYML(){
+		
+		Recorrido recorrido1 = new Recorrido("501","422","2010-12-01 13:26:15","6","DERECHO","2010-12-01 14:23:50","5","ADUANA","58");
+		Recorrido recorrido2 = new Recorrido("501","422","2010-12-01 13:26:15","6","DERECHO","2010-12-01 14:23:50","5","ADUANA","58");
+		Recorrido recorrido3 = new Recorrido("501","350","2010-12-01 13:26:15","7","DERECHO","2010-12-01 14:23:50","8","ADUANA","58");
+		Recorrido recorrido4 = new Recorrido("501","422","2010-12-01 13:26:15","7","DERECHO","2010-12-01 14:23:50","8","ADUANA","58");
+		Recorrido recorrido5 = new Recorrido("1720","460","2010-12-01 13:22:19","3","RETIRO","2010-12-01 14:21:41","3","RETIRO","59");
+		
+		List<Recorrido> listaDeRecorridos = new LinkedList<Recorrido>();
+		listaDeRecorridos.add(recorrido1);
+		listaDeRecorridos.add(recorrido2);
+		listaDeRecorridos.add(recorrido3);
+		listaDeRecorridos.add(recorrido4);
+		listaDeRecorridos.add(recorrido5);
+		
+		Estadistica recorridoMasRealizado = new EstadisticaRecorridoMasRealizado();
+		List<String> listaDeResultados = recorridoMasRealizado.generarEstadistica(listaDeRecorridos);
+		recorridoMasRealizado.generarListaEnFormatoYML(listaDeResultados);
+	
+		Assert.assertTrue(recorridoMasRealizado.generarListaEnFormatoYML(listaDeResultados).size()==5);
+		Assert.assertTrue(recorridoMasRealizado.generarListaEnFormatoYML(listaDeResultados).contains("Recorrido mas realizado:"));
+		Assert.assertTrue(recorridoMasRealizado.generarListaEnFormatoYML(listaDeResultados).contains("    id origen: 6"));
+		Assert.assertTrue(recorridoMasRealizado.generarListaEnFormatoYML(listaDeResultados).contains("    id destino: 5"));
+		Assert.assertTrue(recorridoMasRealizado.generarListaEnFormatoYML(listaDeResultados).contains("    id origen: 7"));
+		Assert.assertTrue(recorridoMasRealizado.generarListaEnFormatoYML(listaDeResultados).contains("    id destino: 8"));
+		
+	}
 
 }

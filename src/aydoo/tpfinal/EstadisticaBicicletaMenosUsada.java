@@ -10,8 +10,9 @@ import java.util.TreeMap;
 public class EstadisticaBicicletaMenosUsada extends Estadistica {
 
 	public EstadisticaBicicletaMenosUsada() {
+		
 		this.nombreEstadistica = "Bicicletas menos usadas";
-		this.nombreCampos = new String[] {"id"};
+
 	}
 	
 	@Override
@@ -70,6 +71,21 @@ public class EstadisticaBicicletaMenosUsada extends Estadistica {
 	
 		return listaDeResultados;
 	
+	}
+	
+	public List<String> generarListaEnFormatoYML(List<String> lista) {
+
+		List<String> listaFormateada = new LinkedList<String>();
+		listaFormateada.add(nombreEstadistica + ":");
+		
+		for (String string : lista){
+			
+			listaFormateada.add("	id: " + string);	
+			
+		} 
+
+		return listaFormateada;
+		
 	}
 
 }

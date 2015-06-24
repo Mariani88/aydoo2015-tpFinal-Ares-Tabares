@@ -2,8 +2,6 @@ package aydoo.tpfinal;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.mockito.Mockito;
-import static org.mockito.Mockito.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

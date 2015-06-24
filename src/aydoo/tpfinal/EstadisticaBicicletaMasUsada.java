@@ -9,8 +9,9 @@ import java.util.Map.Entry;
 public class EstadisticaBicicletaMasUsada extends Estadistica {
 
 	public EstadisticaBicicletaMasUsada() {
+		
 		this.nombreEstadistica = "Bicicletas mas usadas";
-		this.nombreCampos = new String[] {"id"};
+	
 	}
 	
 	@Override
@@ -71,6 +72,21 @@ public class EstadisticaBicicletaMasUsada extends Estadistica {
 	
 		return listaDeResultados;
 	
+	}
+	
+	public List<String> generarListaEnFormatoYML(List<String> lista) {
+
+		List<String> listaFormateada = new LinkedList<String>();
+		listaFormateada.add(nombreEstadistica + ":");
+		
+		for (String string : lista){
+			
+			listaFormateada.add("	id: " + string);	
+			
+		} 
+
+		return listaFormateada;
+		
 	}
 
 

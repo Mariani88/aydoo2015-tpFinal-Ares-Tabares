@@ -72,11 +72,8 @@ public class ProcesadorEstadistico {
     private List<String> generarReporteEstadisticas(List<Recorrido> listaDeRecorridos){
         List<String> contenidoEnFormatoYML = new ArrayList<>();
         for (Estadistica estadistica: this.estadisticasDisponibles){
-            contenidoEnFormatoYML.add(estadistica.getNombreEstadistica() + ":");
-            for (String resultado: estadistica.generarEstadistica(listaDeRecorridos)){
-                contenidoEnFormatoYML.add("     " + estadistica.getNombreCampos()[0]+ ":" + resultado);
+            contenidoEnFormatoYML.addAll(estadistica.generarListaEnFormatoYML(estadistica.generarEstadistica(listaDeRecorridos)));
             }
-        }
         return contenidoEnFormatoYML;
     }
 
