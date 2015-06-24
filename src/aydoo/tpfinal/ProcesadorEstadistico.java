@@ -1,8 +1,6 @@
 package aydoo.tpfinal;
 
-
 import org.apache.commons.io.IOUtils;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -20,14 +18,16 @@ import static java.nio.file.StandardCopyOption.*;
 public class ProcesadorEstadistico {
 
     private String directorioDeEntrada;
-    private String directorioDeArchivosProcesados;
-    private String directorioDeSalidaDeReportes;
-    private List<Estadistica> estadisticasDisponibles;
+    private final String directorioDeArchivosProcesados;
+    private final String directorioDeSalidaDeReportes;
+    private final List<Estadistica> estadisticasDisponibles;
+    private final String encabezado;
 
     public ProcesadorEstadistico(List<Estadistica> estadisticasDisponibles) {
         this.directorioDeArchivosProcesados = "archivosProcesados/";
         this.directorioDeSalidaDeReportes = "reportes/";
         this.estadisticasDisponibles = estadisticasDisponibles;
+        this.encabezado = "usuarioid;bicicletaid;origenfecha;origenestacionid;origennombre;destinofecha;destinoestacionid;destinonombre;tiempouso";
     }
 
     private List<Recorrido> procesarArchivoZip(String rutaAZip) {
@@ -60,7 +60,8 @@ public class ProcesadorEstadistico {
         Scanner scanner = new Scanner(contenidoDelCSV);
         while (scanner.hasNextLine()) {
             String linea = scanner.nextLine();
-            if (!linea.equals("usuarioid;bicicletaid;origenfecha;origenestacionid;origennombre;destinofecha;destinoestacionid;destinonombre;tiempouso")){
+            //if (!linea.equals("usuarioid;bicicletaid;origenfecha;origenestacionid;origennombre;destinofecha;destinoestacionid;destinonombre;tiempouso")){
+            if (!this.encabezado.equals(linea)){
                 String[] lineaSeparadaPorComas = linea.split(";");
                 Recorrido recorrido = new Recorrido(lineaSeparadaPorComas[0],lineaSeparadaPorComas[1],lineaSeparadaPorComas[2],lineaSeparadaPorComas[3],lineaSeparadaPorComas[4],lineaSeparadaPorComas[5],lineaSeparadaPorComas[6],lineaSeparadaPorComas[7],lineaSeparadaPorComas[8]);
                 listaDeRecorridos.add(recorrido);
@@ -122,11 +123,8 @@ public class ProcesadorEstadistico {
 
 
             for (File file : listaDeArchivos){
-                if (file.isFile()){
-
-                    if(file.getName().endsWith(".zip")){
-                        listaDeZips.add(file);
-                    }
+                if (file.isFile() && file.getName().endsWith(".zip")){
+                    listaDeZips.add(file);
                 }
             }
         }
