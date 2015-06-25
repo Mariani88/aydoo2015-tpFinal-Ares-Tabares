@@ -20,13 +20,13 @@ public class ProcesadorEstadistico {
     private String directorioDeEntrada;
     private final String directorioDeArchivosProcesados;
     private final String directorioDeSalidaDeReportes;
-    private final List<Estadistica> estadisticasDisponibles;
+    private List<Estadistica> estadisticasDisponibles;
     private final String encabezado;
 
-    public ProcesadorEstadistico(List<Estadistica> estadisticasDisponibles) {
+    public ProcesadorEstadistico() {
         this.directorioDeArchivosProcesados = "archivosProcesados/";
         this.directorioDeSalidaDeReportes = "reportes/";
-        this.estadisticasDisponibles = estadisticasDisponibles;
+        this.prepararEstadisticas();
         this.encabezado = "usuarioid;bicicletaid;origenfecha;origenestacionid;origennombre;destinofecha;destinoestacionid;destinonombre;tiempouso";
     }
 
@@ -130,5 +130,13 @@ public class ProcesadorEstadistico {
         }
 
         return listaDeZips;
+    }
+
+    private void prepararEstadisticas(){
+        this.estadisticasDisponibles = new ArrayList<>();
+        this.estadisticasDisponibles.add(new EstadisticaBicicletaMasUsada());
+        this.estadisticasDisponibles.add(new EstadisticaBicicletaMenosUsada());
+        this.estadisticasDisponibles.add(new EstadisticaRecorridoMasRealizado());
+        this.estadisticasDisponibles.add(new EstadisticaTiempoPromedioDeUso());
     }
 }
