@@ -9,6 +9,14 @@ import org.junit.Test;
 public class EstadisticaBicicletaMasUsadaTest {
 	
 	@Test
+	public void crearUnaEstadisticaDelTipoEstadisticaBicicletaMasUsada(){
+		
+		Estadistica masUsada = new EstadisticaBicicletaMasUsada();
+		Assert.assertEquals("Bicicletas mas usadas", masUsada.getNombreEstadistica());
+		
+	}
+	
+	@Test
 	public void generarEstadisticaParaBicicletaMasUsadaEnBaseAUnaListaDeRecorridosDebeContenerId422(){
 		
 		Recorrido recorrido1 = new Recorrido("501","422","2010-12-01 13:26:15","6","DERECHO","2010-12-01 14:23:50","5","ADUANA","58");

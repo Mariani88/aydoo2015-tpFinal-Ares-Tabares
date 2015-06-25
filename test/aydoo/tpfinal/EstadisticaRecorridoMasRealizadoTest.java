@@ -9,6 +9,14 @@ import org.junit.Test;
 public class EstadisticaRecorridoMasRealizadoTest {
 	
 	@Test
+	public void crearUnaEstadisticaDelTipoRecorridoMasRealizado(){
+		
+		Estadistica recorridoMasRealizado = new EstadisticaRecorridoMasRealizado();
+		Assert.assertEquals("Recorrido mas realizado", recorridoMasRealizado.getNombreEstadistica());
+		
+	}
+	
+	@Test
 	public void generarEstadisticaParaRecorridoMasRealizadoDebeDevolverUnPar6Coma5(){
 		
 		Recorrido recorrido1 = new Recorrido("501","422","2010-12-01 13:26:15","6","DERECHO","2010-12-01 14:23:50","5","ADUANA","58");

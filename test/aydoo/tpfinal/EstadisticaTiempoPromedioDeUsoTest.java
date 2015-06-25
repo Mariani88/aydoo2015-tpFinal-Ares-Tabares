@@ -9,6 +9,14 @@ import org.junit.Test;
 public class EstadisticaTiempoPromedioDeUsoTest {
 	
 	@Test
+	public void crearUnaEstadisticaDelTipoRecorridoMasRealizado(){
+		
+		Estadistica tiempoPromedio = new EstadisticaTiempoPromedioDeUso();
+		Assert.assertEquals("Tiempo promedio de uso", tiempoPromedio.getNombreEstadistica());
+		
+	}
+	
+	@Test
 	public void generarEstadisticaParaTiempoPromedioDeUsoDebeDevolver58(){
 		
 		Recorrido recorrido1 = new Recorrido("501","422","2010-12-01 13:26:15","6","DERECHO","2010-12-01 14:23:50","5","ADUANA","58");

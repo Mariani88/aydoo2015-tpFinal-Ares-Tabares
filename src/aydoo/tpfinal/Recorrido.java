@@ -19,9 +19,7 @@ public class Recorrido {
     private final String destinoNombre;
     private final int tiempoDeUso;
 
-
-
-    public Recorrido(String usuarioId, String bicicletaId, String origenFecha, String origenEstacionId, String origenNombre, String destinoFecha,String destinoEstacionId,String destinoNombre, String tiempoDeUso) {
+    public Recorrido(String usuarioId, String bicicletaId, String origenFecha, String origenEstacionId, String origenNombre, String destinoFecha,String destinoEstacionId,String destinoNombre, String tiempoDeUso){
         this.usuarioId = usuarioId;
         this.bicicletaId = bicicletaId;
         this.origenFecha = this.convertirDateStringAGregorianCalendar(origenFecha) ;
@@ -34,7 +32,7 @@ public class Recorrido {
     }
 
     private GregorianCalendar convertirDateStringAGregorianCalendar(String origenfecha){
-        //2010-12-30 19:39:03
+
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = null;
         try {
@@ -47,6 +45,8 @@ public class Recorrido {
         return cal;
     }
 
+    // Getters & Setters
+    
     public String getUsuarioId() {
         return usuarioId;
     }
