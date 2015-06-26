@@ -1,0 +1,20 @@
+Como correr la applicacion:
+
+1. Realizar build con ant
+2. Asegurarse de que existe el directorio a procesar
+3. Posicionarse en "DirectorioDelProyecto"/Build
+4. Ejecutar:
+
+	Modo Daemon:
+	
+	java aydoo.tpfinal.ProcesadorEstadistico <DirectorioDeArchivos> demonio
+
+	- Los archivos seran movidos a: "DirectorioDelProyecto"/Build/ArchivosProcesados
+	- Los archivos de salida se encontrara en: "DirectorioDelProyecto"/Build/reportes/ 	
+
+	Modo on-Demand: 
+
+	java aydoo.tpfinal.ProcesadorEstadistico <DirectorioDeArchivos>
+
+	- Tener en cuenta que los archivos no seran movidos en este modo de ejecucion
+	- El archivo de salida se encontrara en: "DirectorioDelProyecto"/Build/reportes/
