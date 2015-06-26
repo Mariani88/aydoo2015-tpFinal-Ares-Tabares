@@ -1,6 +1,8 @@
 package aydoo.tpfinal;
 
 import org.apache.commons.io.IOUtils;
+
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -28,6 +30,22 @@ public class ProcesadorEstadistico {
         this.directorioDeSalidaDeReportes = "reportes/";
         this.prepararEstadisticas();
         this.encabezado = "usuarioid;bicicletaid;origenfecha;origenestacionid;origennombre;destinofecha;destinoestacionid;destinonombre;tiempouso";
+    }
+
+    public static void main(String[] args) {
+        switch (args.length){
+            case 1:
+                System.out.println("1");
+                break;
+            case 2:
+                System.out.println("2");
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Error:");
+                break;
+
+        }
+
     }
 
     private List<Recorrido> procesarArchivoZip(String rutaAZip) {
