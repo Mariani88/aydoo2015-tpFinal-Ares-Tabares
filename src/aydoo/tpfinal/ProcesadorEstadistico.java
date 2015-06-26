@@ -37,8 +37,10 @@ public class ProcesadorEstadistico {
         	//Modo on-Demand
         	case 1:
                 if (validarDirectorioDeEntrada(args[0])){
+                	System.out.println("Procesando Archivos ...");
                     ProcesadorEstadistico procesadorOnDemand = new ProcesadorEstadistico();
                     procesadorOnDemand.procesarModoOnDemand(args[0]);
+                    System.out.println("Completado");
                     break;
                 }
                 else{
@@ -49,6 +51,7 @@ public class ProcesadorEstadistico {
             case 2:
                 if (args[1].equals("demonio")){
                     if (validarDirectorioDeEntrada(args[0])){
+                    	System.out.println("Modo demonio iniciado, para terminar presionar Ctrl+C");
                         ProcesadorEstadistico procesadorDaemon = new ProcesadorEstadistico();
                         Daemon daemon = new Daemon(args[0],procesadorDaemon);
                         daemon.monitorear();
@@ -146,12 +149,11 @@ public class ProcesadorEstadistico {
         for (String archivoAProcesar: archivosAProcesar ){
             List<Recorrido> listaDeRecorridos = new ArrayList();
             listaDeRecorridos.addAll(this.procesarArchivoZip(archivoAProcesar));
-            String[] archivoAProcesarSeparadoPorBarras = archivoAProcesar.split("/");
-            String nombreArchivo = archivoAProcesarSeparadoPorBarras[archivoAProcesarSeparadoPorBarras.length - 1];
-            String[] nombreBase = nombreArchivo.split("\\.");
-            this.guardarReporteEstadisticasADisco( nombreBase[0] + ".salida.yml",this.generarReporteEstadisticas(listaDeRecorridos));
+            File archivo = new File(archivoAProcesar);    
+            this.guardarReporteEstadisticasADisco( archivo.getName().subSequence(0, archivo.getName().length()-4) + ".salida.yml", this.generarReporteEstadisticas(listaDeRecorridos));
             Path origen = Paths.get(archivoAProcesar);
-            Path destino = Paths.get(this.nombreDirectorioDeArchivosProcesados + archivoAProcesarSeparadoPorBarras[archivoAProcesarSeparadoPorBarras.length - 1]);
+            Path destino = Paths.get(this.nombreDirectorioDeArchivosProcesados + archivo.getName());
+
             try {
                 Files.move(origen,destino,REPLACE_EXISTING);
             } catch (IOException e) {
