@@ -9,43 +9,21 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by dtabar on 6/22/15.
- */
+
 public class ProcesadorEstadisticoTest {
 
     @Test
     public void cuandoElDirectorioDeEntradaTieneContenidoElProcesadorOnDemandDebeGenerarUnArchivoDeSalidaConTamanoMayorACero() throws IOException {
-        List<Estadistica> listaDeEstadisticas = new ArrayList<>();
-        EstadisticaBicicletaMasUsada estadisticaBiciMasUsada = new EstadisticaBicicletaMasUsada();
-        EstadisticaBicicletaMenosUsada estadisticaBicicletaMenosUsada = new EstadisticaBicicletaMenosUsada();
-        EstadisticaRecorridoMasRealizado estadisticaRecorridoMasRealizado = new EstadisticaRecorridoMasRealizado();
-        EstadisticaTiempoPromedioDeUso estadisticaTiempoPromedioDeUso = new EstadisticaTiempoPromedioDeUso();
-
-        listaDeEstadisticas.add(estadisticaBiciMasUsada);
-        listaDeEstadisticas.add(estadisticaBicicletaMenosUsada);
-        listaDeEstadisticas.add(estadisticaRecorridoMasRealizado);
-        listaDeEstadisticas.add(estadisticaTiempoPromedioDeUso);
 
         ProcesadorEstadistico procesadorEstadistico = new ProcesadorEstadistico();
-        procesadorEstadistico.procesarModoOnDemand("archivosAProcesar/directorioDePruebaConDosZip");
+        procesadorEstadistico.procesarModoOnDemand("archivosAProcesar/directorioDePruebaConUnZipQueTieneUnSoloCSVConUnaLinea");
         Path reporte = Paths.get("reportes/salidaUnica.yml");
 
         Assert.assertTrue(Files.size(reporte) > 0);
     }
 
     @Test
-    public void cuandoSePasaUnaListaDeDosArchivosElProcesadorOnDemandDebeGenerarDosArchivosDeSalidaConTamanoMayorACero(){
-        List<Estadistica> listaDeEstadisticas = new ArrayList<>();
-        EstadisticaBicicletaMasUsada estadisticaBiciMasUsada = new EstadisticaBicicletaMasUsada();
-        EstadisticaBicicletaMenosUsada estadisticaBicicletaMenosUsada = new EstadisticaBicicletaMenosUsada();
-        EstadisticaRecorridoMasRealizado estadisticaRecorridoMasRealizado = new EstadisticaRecorridoMasRealizado();
-        EstadisticaTiempoPromedioDeUso estadisticaTiempoPromedioDeUso = new EstadisticaTiempoPromedioDeUso();
-
-        listaDeEstadisticas.add(estadisticaBiciMasUsada);
-        listaDeEstadisticas.add(estadisticaBicicletaMenosUsada);
-        listaDeEstadisticas.add(estadisticaRecorridoMasRealizado);
-        listaDeEstadisticas.add(estadisticaTiempoPromedioDeUso);
+    public void cuandoSePasaUnaListaDeDosArchivosElProcesadorOnDemandDebeGenerarDosArchivosDeSalidaConTamanoMayorACero() throws IOException {
 
         List<String> listaDeArchivosAProcesar = new ArrayList<>();
         listaDeArchivosAProcesar.add("archivosAProcesar/directorioDePruebaConDosZip/CSVConTresLineas.zip");
@@ -53,5 +31,11 @@ public class ProcesadorEstadisticoTest {
 
         ProcesadorEstadistico procesadorEstadistico = new ProcesadorEstadistico();
         procesadorEstadistico.procesarModoDaemon(listaDeArchivosAProcesar);
+        Path reporteCSVConTresLineas = Paths.get("reportes/CSVConTresLineas.salida.yml");
+        Path reporteCSVConUnaLinea = Paths.get("reportes/CSVConUnaLinea.salida.yml");
+
+        Assert.assertTrue(Files.size(reporteCSVConTresLineas) > 0);
+        Assert.assertTrue(Files.size(reporteCSVConUnaLinea) > 0);
+
     }
 }
