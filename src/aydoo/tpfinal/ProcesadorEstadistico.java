@@ -17,7 +17,7 @@ import static java.nio.file.StandardCopyOption.*;
 
 public class ProcesadorEstadistico {
 
-    private String directorioDeEntrada;
+    private String nombreDirectorioDeEntrada;
     private final String nombreDirectorioDeArchivosProcesados;
     private final String nombreDirectorioDeSalidaDeReportes;
     private List<Estadistica> estadisticasDisponibles;
@@ -36,26 +36,32 @@ public class ProcesadorEstadistico {
 
         	//Modo on-Demand
         	case 1:
-        		ProcesadorEstadistico procesadorOnDemand = new ProcesadorEstadistico();
-        		procesadorOnDemand.procesarModoOnDemand(args[0]);
-                break;
-            
+                if (validarDirectorioDeEntrada(args[0])){
+                    ProcesadorEstadistico procesadorOnDemand = new ProcesadorEstadistico();
+                    procesadorOnDemand.procesarModoOnDemand(args[0]);
+                    break;
+                }
+                else{
+                    imprimirMensajeDeErrorDirectorioInvalido();
+                    break;
+                }
             //Modo Daemon
             case 2:
                 if (args[1].equals("demonio")){
-                    ProcesadorEstadistico procesadorDaemon = new ProcesadorEstadistico();
-                    Daemon daemon = new Daemon(args[0],procesadorDaemon);
-                    daemon.monitorear();
+                    if (validarDirectorioDeEntrada(args[0])){
+                        ProcesadorEstadistico procesadorDaemon = new ProcesadorEstadistico();
+                        Daemon daemon = new Daemon(args[0],procesadorDaemon);
+                        daemon.monitorear();
+                        break;
+                    }
                 }
                 else{
-                    System.out.println("Error: Debe proveer directorio y un modo de ejecucion valido");
+                    imprimirMensajeDeErrorArgumentosInvalidos();
+                    break;
                 }
-
-                break;
-
                 
             default:
-            	System.out.println("Error: Debe proveer directorio y un modo de ejecucion valido");
+                imprimirMensajeDeErrorArgumentosInvalidos();
                 break;
 
         }
@@ -126,7 +132,7 @@ public class ProcesadorEstadistico {
     }
 
     public void procesarModoOnDemand(String directorioDeEntrada){
-        this.directorioDeEntrada = directorioDeEntrada;
+        this.nombreDirectorioDeEntrada = directorioDeEntrada;
         List<Recorrido> listaDeRecorridos = new ArrayList();
         List<File> archivosZipDentroDelDirectorio = this.obtenerArchivosZipDentroDelDirectorio();
 
@@ -156,7 +162,7 @@ public class ProcesadorEstadistico {
 
     private List<File> obtenerArchivosZipDentroDelDirectorio(){
         List<File> listaDeZips = new ArrayList<>();
-        File directorio = new File (this.directorioDeEntrada);
+        File directorio = new File (this.nombreDirectorioDeEntrada);
 
         if(directorio.exists()){
             File[] listaDeArchivos = directorio.listFiles();
@@ -199,5 +205,35 @@ public class ProcesadorEstadistico {
                 e.printStackTrace();
             }
         }
+    }
+
+    private static boolean validarDirectorioDeEntrada(String argumento){
+        boolean esValido;
+        File directorioDeEntrada = new File(argumento);
+        if(directorioDeEntrada.isDirectory()){
+            String[] contenidoDelDirectorio = directorioDeEntrada.list();
+            if (contenidoDelDirectorio.length > 0){
+                esValido = true;
+            }
+            else{
+                esValido = false;
+            }
+        }
+        else{
+            esValido = false;
+        }
+
+        return esValido;
+    }
+
+    private static void imprimirMensajeDeErrorDirectorioInvalido(){
+        System.out.println("El directorio ingresado es invalido.");
+    }
+
+    private static void imprimirMensajeDeErrorArgumentosInvalidos(){
+        System.out.println("Error: Debe proveer directorio y un modo de ejecucion valido");
+        System.out.println("Ejemplos: java aydoo.tpfinal.ProcesadorEstadistico <directorio> demonio");
+        System.out.println("o");
+        System.out.println("java aydoo.tpfinal.ProcesadorEstadistico <directorio>");
     }
 }
