@@ -2,7 +2,6 @@ package aydoo.tpfinal;
 
 import org.apache.commons.io.IOUtils;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -34,14 +33,23 @@ public class ProcesadorEstadistico {
 
     public static void main(String[] args) {
         switch (args.length){
-            case 1:
-                System.out.println("1");
+
+        	//Modo on-Demand
+        	case 1:
+        		ProcesadorEstadistico procesadorOnDemand = new ProcesadorEstadistico();
+        		procesadorOnDemand.procesarModoOnDemand(args[0]);
                 break;
+            
+            //Modo Daemon
             case 2:
-                System.out.println("2");
+        		ProcesadorEstadistico procesadorDaemon = new ProcesadorEstadistico();
+        		Daemon daemon = new Daemon(args[0],procesadorDaemon);
+        		daemon.monitorear();
                 break;
+
+                
             default:
-                JOptionPane.showMessageDialog(null, "Error:");
+            	System.out.println("Error: Debe proveer directorio y modo de ejecucion");
                 break;
 
         }
