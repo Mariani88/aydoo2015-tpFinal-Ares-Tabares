@@ -18,16 +18,17 @@ import static java.nio.file.StandardCopyOption.*;
 public class ProcesadorEstadistico {
 
     private String directorioDeEntrada;
-    private final String directorioDeArchivosProcesados;
-    private final String directorioDeSalidaDeReportes;
+    private final String nombreDirectorioDeArchivosProcesados;
+    private final String nombreDirectorioDeSalidaDeReportes;
     private List<Estadistica> estadisticasDisponibles;
     private final String encabezado;
 
     public ProcesadorEstadistico() {
-        this.directorioDeArchivosProcesados = "archivosProcesados/";
-        this.directorioDeSalidaDeReportes = "reportes/";
+        this.nombreDirectorioDeArchivosProcesados = "archivosProcesados/";
+        this.nombreDirectorioDeSalidaDeReportes = "reportes/";
         this.prepararEstadisticas();
         this.encabezado = "usuarioid;bicicletaid;origenfecha;origenestacionid;origennombre;destinofecha;destinoestacionid;destinonombre;tiempouso";
+        this.crearDirectoriosDeSalida();
     }
 
     public static void main(String[] args) {
@@ -41,14 +42,20 @@ public class ProcesadorEstadistico {
             
             //Modo Daemon
             case 2:
-        		ProcesadorEstadistico procesadorDaemon = new ProcesadorEstadistico();
-        		Daemon daemon = new Daemon(args[0],procesadorDaemon);
-        		daemon.monitorear();
+                if (args[1].equals("demonio")){
+                    ProcesadorEstadistico procesadorDaemon = new ProcesadorEstadistico();
+                    Daemon daemon = new Daemon(args[0],procesadorDaemon);
+                    daemon.monitorear();
+                }
+                else{
+                    System.out.println("Error: Debe proveer directorio y un modo de ejecucion valido");
+                }
+
                 break;
 
                 
             default:
-            	System.out.println("Error: Debe proveer directorio y modo de ejecucion");
+            	System.out.println("Error: Debe proveer directorio y un modo de ejecucion valido");
                 break;
 
         }
@@ -110,7 +117,7 @@ public class ProcesadorEstadistico {
     }
 
     private void guardarReporteEstadisticasADisco(String nombreArchivoSalida, List<String> contenidoEnFormatoYML){
-        Path archivo = Paths.get(this.directorioDeSalidaDeReportes + nombreArchivoSalida);
+        Path archivo = Paths.get(this.nombreDirectorioDeSalidaDeReportes + nombreArchivoSalida);
         try {
             Files.write(archivo, contenidoEnFormatoYML, StandardCharsets.UTF_8);
         } catch (IOException e) {
@@ -138,7 +145,7 @@ public class ProcesadorEstadistico {
             String[] nombreBase = nombreArchivo.split("\\.");
             this.guardarReporteEstadisticasADisco( nombreBase[0] + ".salida.yml",this.generarReporteEstadisticas(listaDeRecorridos));
             Path origen = Paths.get(archivoAProcesar);
-            Path destino = Paths.get(this.directorioDeArchivosProcesados + archivoAProcesarSeparadoPorBarras[archivoAProcesarSeparadoPorBarras.length - 1]);
+            Path destino = Paths.get(this.nombreDirectorioDeArchivosProcesados + archivoAProcesarSeparadoPorBarras[archivoAProcesarSeparadoPorBarras.length - 1]);
             try {
                 Files.move(origen,destino,REPLACE_EXISTING);
             } catch (IOException e) {
@@ -171,5 +178,26 @@ public class ProcesadorEstadistico {
         this.estadisticasDisponibles.add(new EstadisticaBicicletaMenosUsada());
         this.estadisticasDisponibles.add(new EstadisticaRecorridoMasRealizado());
         this.estadisticasDisponibles.add(new EstadisticaTiempoPromedioDeUso());
+    }
+
+    private void crearDirectoriosDeSalida(){
+        Path pathADirectorioDeArchivosProcesados = Paths.get(this.nombreDirectorioDeArchivosProcesados);
+        Path pathADirectorioDeSalidaDeReportes = Paths.get(this.nombreDirectorioDeSalidaDeReportes);
+
+        if(!Files.exists(pathADirectorioDeArchivosProcesados)){
+            try {
+                Files.createDirectory(pathADirectorioDeArchivosProcesados);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(!Files.exists(pathADirectorioDeSalidaDeReportes)){
+            try {
+                Files.createDirectory(pathADirectorioDeSalidaDeReportes);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
