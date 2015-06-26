@@ -1,9 +1,8 @@
 package aydoo.tpfinal;
 
-import org.apache.commons.io.IOUtils;
-
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -66,31 +65,37 @@ public class ProcesadorEstadistico {
             while(contenidoDelZip.hasMoreElements()){
                 ZipEntry zipEntry = (ZipEntry) contenidoDelZip.nextElement();
                 try {
-                    String contenidoDelCSV = IOUtils.toString(zip.getInputStream(zipEntry), StandardCharsets.UTF_8.name());
-                    listaDeRecorridos.addAll(this.generarRecorridos(contenidoDelCSV));
+
+                    InputStream inputStream = zip.getInputStream(zipEntry);
+                    listaDeRecorridos.addAll(this.generarRecorridos(inputStream));
+                    inputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
             }
+            zip.close();
         }
         catch (IOException e) {
             e.printStackTrace();
         }
 
+
+
         return listaDeRecorridos;
     }
 
-    private List<Recorrido> generarRecorridos(String contenidoDelCSV){
+    private List<Recorrido> generarRecorridos(InputStream contenidoDelCSV){
         List<Recorrido> listaDeRecorridos = new ArrayList<>();
         Scanner scanner = new Scanner(contenidoDelCSV);
         while (scanner.hasNextLine()) {
             String linea = scanner.nextLine();
-            //if (!linea.equals("usuarioid;bicicletaid;origenfecha;origenestacionid;origennombre;destinofecha;destinoestacionid;destinonombre;tiempouso")){
             if (!this.encabezado.equals(linea)){
                 String[] lineaSeparadaPorComas = linea.split(";");
-                Recorrido recorrido = new Recorrido(lineaSeparadaPorComas[0],lineaSeparadaPorComas[1],lineaSeparadaPorComas[2],lineaSeparadaPorComas[3],lineaSeparadaPorComas[4],lineaSeparadaPorComas[5],lineaSeparadaPorComas[6],lineaSeparadaPorComas[7],lineaSeparadaPorComas[8]);
-                listaDeRecorridos.add(recorrido);
+                if (lineaSeparadaPorComas.length == 9){
+                    Recorrido recorrido = new Recorrido(lineaSeparadaPorComas[0],lineaSeparadaPorComas[1],lineaSeparadaPorComas[2],lineaSeparadaPorComas[3],lineaSeparadaPorComas[4],lineaSeparadaPorComas[5],lineaSeparadaPorComas[6],lineaSeparadaPorComas[7],lineaSeparadaPorComas[8]);
+                    listaDeRecorridos.add(recorrido);
+                }
             }
         }
         return listaDeRecorridos;
@@ -128,10 +133,12 @@ public class ProcesadorEstadistico {
         for (String archivoAProcesar: archivosAProcesar ){
             List<Recorrido> listaDeRecorridos = new ArrayList();
             listaDeRecorridos.addAll(this.procesarArchivoZip(archivoAProcesar));
-            String[] archivosAProcesarSeparado = archivoAProcesar.split("/");
-            this.guardarReporteEstadisticasADisco(archivosAProcesarSeparado[archivosAProcesarSeparado.length - 1] + ".salida.yml",this.generarReporteEstadisticas(listaDeRecorridos));
+            String[] archivoAProcesarSeparadoPorBarras = archivoAProcesar.split("/");
+            String nombreArchivo = archivoAProcesarSeparadoPorBarras[archivoAProcesarSeparadoPorBarras.length - 1];
+            String[] nombreBase = nombreArchivo.split("\\.");
+            this.guardarReporteEstadisticasADisco( nombreBase[0] + ".salida.yml",this.generarReporteEstadisticas(listaDeRecorridos));
             Path origen = Paths.get(archivoAProcesar);
-            Path destino = Paths.get(this.directorioDeArchivosProcesados + archivosAProcesarSeparado[archivosAProcesarSeparado.length - 1]);
+            Path destino = Paths.get(this.directorioDeArchivosProcesados + archivoAProcesarSeparadoPorBarras[archivoAProcesarSeparadoPorBarras.length - 1]);
             try {
                 Files.move(origen,destino,REPLACE_EXISTING);
             } catch (IOException e) {
