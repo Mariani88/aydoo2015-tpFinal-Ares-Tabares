@@ -26,7 +26,7 @@ public class EstadisticaTiempoPromedioDeUso extends Estadistica {
 		
 			if (sumaDeTiempoEnRecorridos>0){
 				
-				listaDeResultados.add(Double.toString(sumaDeTiempoEnRecorridos/listaDeRecorridos.size()));
+				listaDeResultados.add(Double.toString(Math.round(sumaDeTiempoEnRecorridos/listaDeRecorridos.size())));
 			
 			}
 			

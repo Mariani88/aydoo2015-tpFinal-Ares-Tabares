@@ -69,7 +69,7 @@ public class EstadisticaTiempoPromedioDeUsoTest {
 		List<String> lista = tiempoPromedio.generarEstadistica(listaDeRecorridos);
 	
 		Assert.assertTrue(tiempoPromedio.generarListaEnFormatoYML(lista).size()==1);
-		Assert.assertTrue(tiempoPromedio.generarListaEnFormatoYML(lista).contains("Tiempo promedio de uso: 58.2"));
+		Assert.assertTrue(tiempoPromedio.generarListaEnFormatoYML(lista).contains("Tiempo promedio de uso: 58.0"));
 		
 		
 	}
