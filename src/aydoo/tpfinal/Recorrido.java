@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class Recorrido {
 
@@ -33,7 +34,7 @@ public class Recorrido {
 
     private GregorianCalendar convertirDateStringAGregorianCalendar(String origenfecha){
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
         Date date = null;
         try {
             date = dateFormat.parse(origenfecha);
