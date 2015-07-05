@@ -38,7 +38,7 @@ public class EstadisticaBicicletaMasUsada extends Estadistica {
 				}
 
 			}
-			
+			//BORRAR ESTA LINEA Y HACER EL METODO VOID
 			listaDeResultados = buscarMaximo(mapa);
 		
 		}
@@ -54,6 +54,7 @@ public class EstadisticaBicicletaMasUsada extends Estadistica {
 			
 	}
 
+	//HACER METODO PUBLICO Y CAMBIARLE EL NOMBRE POR "AISLAR INFORMACION", PONERLO EN CLASE PADRE
 	private List<String> buscarMaximo(Map<String, Integer> mapa) {
 		
 		List<String> listaDeResultados = new LinkedList<String>();

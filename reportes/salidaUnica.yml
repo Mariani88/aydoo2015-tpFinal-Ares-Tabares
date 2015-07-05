@@ -1,8 +1,8 @@
 Bicicletas mas usadas:
-     null
+    id: 403
 Bicicletas menos usadas:
-     null
+    id: 403
 Recorrido mas realizado:
-     null
-Tiempo promedio de uso:
-     0
+    id origen: 6
+    id destino: 3
+Tiempo promedio de uso: 7.0

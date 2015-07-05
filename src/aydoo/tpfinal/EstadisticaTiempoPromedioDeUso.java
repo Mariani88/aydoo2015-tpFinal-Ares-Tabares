@@ -24,6 +24,7 @@ public class EstadisticaTiempoPromedioDeUso extends Estadistica {
 				
 			}
 		
+		//MANDAR LAS LINEAS DE ABAJO AL METODO A AGREGAR "AISLAR DATO" Y CONVERTIR METODO A VOID
 			if (sumaDeTiempoEnRecorridos>0){
 				
 				listaDeResultados.add(Double.toString(Math.round(sumaDeTiempoEnRecorridos/listaDeRecorridos.size())));

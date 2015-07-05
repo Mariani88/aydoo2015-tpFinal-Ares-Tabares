@@ -32,6 +32,9 @@ public class ProcesadorEstadistico {
     }
 
     public static void main(String[] args) {
+    	
+    	long tiempoInicial = System.currentTimeMillis();
+    	
         switch (args.length){
 
         	//Modo on-Demand
@@ -68,16 +71,19 @@ public class ProcesadorEstadistico {
                 break;
 
         }
+        
+        long tiempo  = System.currentTimeMillis() - tiempoInicial ; 
+        System.out.println ("tiempo insumido:" + tiempo/1000 + " segundos");
 
     }
 
     private List<Recorrido> procesarArchivoZip(String rutaAZip) {
-        List<Recorrido> listaDeRecorridos = new ArrayList<>();
+        List<Recorrido> listaDeRecorridos = new ArrayList<Recorrido>();
         ZipFile zip;
         try {
             zip = new ZipFile(rutaAZip);
-            Enumeration contenidoDelZip = zip.entries();
-
+            Enumeration<? extends ZipEntry> contenidoDelZip = zip.entries();
+            
             while(contenidoDelZip.hasMoreElements()){
                 ZipEntry zipEntry = (ZipEntry) contenidoDelZip.nextElement();
                 try {
@@ -111,15 +117,19 @@ public class ProcesadorEstadistico {
                 if (lineaSeparadaPorComas.length == 9){
                     Recorrido recorrido = new Recorrido(lineaSeparadaPorComas[0],lineaSeparadaPorComas[1],lineaSeparadaPorComas[2],lineaSeparadaPorComas[3],lineaSeparadaPorComas[4],lineaSeparadaPorComas[5],lineaSeparadaPorComas[6],lineaSeparadaPorComas[7],lineaSeparadaPorComas[8]);
                     listaDeRecorridos.add(recorrido);
-                }
+                } //AGREGAR QUE CUANDO SE LEYO 500 LINEAS SE HAGA EL HISTORIAL
             }
         }
+        
+        scanner.close();
         return listaDeRecorridos;
     }
 
     private List<String> generarReporteEstadisticas(List<Recorrido> listaDeRecorridos){
-        List<String> contenidoEnFormatoYML = new ArrayList<>();
+        List<String> contenidoEnFormatoYML = new ArrayList<String>();
         for (Estadistica estadistica: this.estadisticasDisponibles){
+        	//ACA PEDIRLE A LA ESTADISTICA LA LISTA DE MAXIMOS, MINIMOS, ETC. Y
+        	//OBTENER CONTENIDO EN FORMATO YML
             contenidoEnFormatoYML.addAll(estadistica.generarListaEnFormatoYML(estadistica.generarEstadistica(listaDeRecorridos)));
             }
         return contenidoEnFormatoYML;
@@ -136,10 +146,11 @@ public class ProcesadorEstadistico {
 
     public void procesarModoOnDemand(String directorioDeEntrada){
         this.nombreDirectorioDeEntrada = directorioDeEntrada;
-        List<Recorrido> listaDeRecorridos = new ArrayList();
+        List<Recorrido> listaDeRecorridos = new ArrayList<Recorrido>();
         List<File> archivosZipDentroDelDirectorio = this.obtenerArchivosZipDentroDelDirectorio();
 
         for (File archivoZip: archivosZipDentroDelDirectorio){
+        	//METER WHILE LISTA NO VACIA, DAME 500 (ABANDONARLO)
             listaDeRecorridos.addAll(this.procesarArchivoZip(archivoZip.toString()));
         }
         this.guardarReporteEstadisticasADisco("salidaUnica.yml",this.generarReporteEstadisticas(listaDeRecorridos));
@@ -147,7 +158,7 @@ public class ProcesadorEstadistico {
 
     public void procesarModoDaemon(List<String> archivosAProcesar){
         for (String archivoAProcesar: archivosAProcesar ){
-            List<Recorrido> listaDeRecorridos = new ArrayList();
+            List<Recorrido> listaDeRecorridos = new ArrayList<Recorrido>();
             listaDeRecorridos.addAll(this.procesarArchivoZip(archivoAProcesar));
             File archivo = new File(archivoAProcesar);    
             this.guardarReporteEstadisticasADisco( archivo.getName().subSequence(0, archivo.getName().length()-4) + ".salida.yml", this.generarReporteEstadisticas(listaDeRecorridos));

@@ -38,7 +38,7 @@ public class EstadisticaBicicletaMenosUsada extends Estadistica {
 				}
 	
 			}
-	
+			//BORRAR ESTA LINEA Y HACER EL METODO VOID
 			listaDeResultados = buscarMinimo(mapa);
 	
 		}
@@ -52,7 +52,7 @@ public class EstadisticaBicicletaMenosUsada extends Estadistica {
 	return listaDeResultados;
 
 	}
-	
+	//HACER METODO PUBLICO Y CAMBIARLE EL NOMBRE POR "AISLAR INFORMACION", PONERLO EN CLASE PADRE
 	private List<String> buscarMinimo(Map<String, Integer> mapa) {
 		
 		List<String> listaDeResultados = new LinkedList<String>();
