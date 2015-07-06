@@ -23,20 +23,16 @@ public class ProcesadorEstadistico {
     private final String nombreDirectorioDeArchivosProcesados;
     private final String nombreDirectorioDeSalidaDeReportes;
     private List<Estadistica> estadisticasDisponibles;
-    private final String encabezado;
     static double tiempoInicial;
     
     public ProcesadorEstadistico() {
         this.nombreDirectorioDeArchivosProcesados = "archivosProcesados/";
         this.nombreDirectorioDeSalidaDeReportes = "reportes/";
         this.prepararEstadisticas();
-        this.encabezado = "usuarioid;bicicletaid;origenfecha;origenestacionid;origennombre;destinofecha;destinoestacionid;destinonombre;tiempouso";
         this.crearDirectoriosDeSalida();
     }
 
     public static void main(String[] args) {
-    	
-    	
     	
         switch (args.length){
 
@@ -111,18 +107,17 @@ public class ProcesadorEstadistico {
         
         while (scanner.hasNextLine()) {
            linea = scanner.nextLine();
+			String[] lineaSeparadaPorComas = linea.split(";");
+			
+			if (lineaSeparadaPorComas.length == 9) {
+				Recorrido recorrido = new Recorrido(lineaSeparadaPorComas[0],
+						lineaSeparadaPorComas[1], lineaSeparadaPorComas[2],
+						lineaSeparadaPorComas[3], lineaSeparadaPorComas[4],
+						lineaSeparadaPorComas[5], lineaSeparadaPorComas[6],
+						lineaSeparadaPorComas[7], lineaSeparadaPorComas[8]);
+				listaDeRecorridos.add(recorrido);
+			}
             
-           // if (!this.encabezado.equals( linea) ){
-				String[] lineaSeparadaPorComas = linea.split(";");
-				if (lineaSeparadaPorComas.length == 9) {
-					Recorrido recorrido = new Recorrido(lineaSeparadaPorComas[0],
-							lineaSeparadaPorComas[1], lineaSeparadaPorComas[2],
-							lineaSeparadaPorComas[3], lineaSeparadaPorComas[4],
-							lineaSeparadaPorComas[5], lineaSeparadaPorComas[6],
-							lineaSeparadaPorComas[7], lineaSeparadaPorComas[8]);
-					listaDeRecorridos.add(recorrido);
-				} 
-            //}
 			volcarDatosEstadisticos(listaDeRecorridos, scanner);
         }
        
