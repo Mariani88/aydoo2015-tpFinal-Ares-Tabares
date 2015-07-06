@@ -9,10 +9,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
 import static java.nio.file.StandardCopyOption.*;
 
 public class ProcesadorEstadistico {
@@ -43,6 +45,8 @@ public class ProcesadorEstadistico {
                 	System.out.println("Procesando Archivos ...");
                     ProcesadorEstadistico procesadorOnDemand = new ProcesadorEstadistico();
                     procesadorOnDemand.procesarModoOnDemand(args[0]);
+                    //AGREGAR TIEMPO FINAL Y HACER LA RESTA CON TIEMPO INICIAL
+                    //AGREGAR YML
                     System.out.println("Completado");
                     break;
                 }
@@ -77,61 +81,86 @@ public class ProcesadorEstadistico {
 
     }
 
-    private List<Recorrido> procesarArchivoZip(String rutaAZip) {
-        List<Recorrido> listaDeRecorridos = new ArrayList<Recorrido>();
+    private void procesarArchivoZip(String rutaAZip) {
+    	
         ZipFile zip;
+        
         try {
             zip = new ZipFile(rutaAZip);
             Enumeration<? extends ZipEntry> contenidoDelZip = zip.entries();
             
             while(contenidoDelZip.hasMoreElements()){
                 ZipEntry zipEntry = (ZipEntry) contenidoDelZip.nextElement();
+                
                 try {
-
                     InputStream inputStream = zip.getInputStream(zipEntry);
-                    listaDeRecorridos.addAll(this.generarRecorridos(inputStream));
+                    this.generarRecorridos(inputStream);
                     inputStream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
             zip.close();
         }
+
         catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
-        return listaDeRecorridos;
     }
 
-    private List<Recorrido> generarRecorridos(InputStream contenidoDelCSV){
-        List<Recorrido> listaDeRecorridos = new ArrayList<>();
+    private void generarRecorridos(InputStream contenidoDelCSV){
+    	
+        List<Recorrido> listaDeRecorridos = new LinkedList<Recorrido> ();
         Scanner scanner = new Scanner(contenidoDelCSV);
-        while (scanner.hasNextLine()) {
-            String linea = scanner.nextLine();
-            if (!this.encabezado.equals(linea)){
-                String[] lineaSeparadaPorComas = linea.split(";");
-                if (lineaSeparadaPorComas.length == 9){
-                    Recorrido recorrido = new Recorrido(lineaSeparadaPorComas[0],lineaSeparadaPorComas[1],lineaSeparadaPorComas[2],lineaSeparadaPorComas[3],lineaSeparadaPorComas[4],lineaSeparadaPorComas[5],lineaSeparadaPorComas[6],lineaSeparadaPorComas[7],lineaSeparadaPorComas[8]);
-                    listaDeRecorridos.add(recorrido);
-                } //AGREGAR QUE CUANDO SE LEYO 500 LINEAS SE HAGA EL HISTORIAL
-            }
-        }
         
+        String linea = scanner.nextLine();
+        
+        while (scanner.hasNextLine()) {
+           linea = scanner.nextLine();
+            
+           // if (!this.encabezado.equals( linea) ){
+				String[] lineaSeparadaPorComas = linea.split(";");
+				if (lineaSeparadaPorComas.length == 9) {
+					Recorrido recorrido = new Recorrido(lineaSeparadaPorComas[0],
+							lineaSeparadaPorComas[1], lineaSeparadaPorComas[2],
+							lineaSeparadaPorComas[3], lineaSeparadaPorComas[4],
+							lineaSeparadaPorComas[5], lineaSeparadaPorComas[6],
+							lineaSeparadaPorComas[7], lineaSeparadaPorComas[8]);
+					listaDeRecorridos.add(recorrido);
+				} 
+            //}
+			volcarDatosEstadisticos(listaDeRecorridos, scanner);
+        }
+       
         scanner.close();
-        return listaDeRecorridos;
     }
 
-    private List<String> generarReporteEstadisticas(List<Recorrido> listaDeRecorridos){
-        List<String> contenidoEnFormatoYML = new ArrayList<String>();
-        for (Estadistica estadistica: this.estadisticasDisponibles){
-        	//ACA PEDIRLE A LA ESTADISTICA LA LISTA DE MAXIMOS, MINIMOS, ETC. Y
-        	//OBTENER CONTENIDO EN FORMATO YML
-            contenidoEnFormatoYML.addAll(estadistica.generarListaEnFormatoYML(estadistica.generarEstadistica(listaDeRecorridos)));
+	private void volcarDatosEstadisticos(List<Recorrido> listaDeRecorridos,
+			Scanner scanner) {
+		if (listaDeRecorridos.size() == 2000 || !scanner.hasNextLine()){
+			
+			for (Estadistica estadistica: this.estadisticasDisponibles){
+				estadistica.generarEstadistica(listaDeRecorridos);
+			}
+			
+			listaDeRecorridos.clear();
+		}
+	}
+
+  
+
+	private List<String> generarReporteEstadisticas(){
+        
+		List<String> contenidoEnFormatoYML = new ArrayList<String>();
+        
+		for (Estadistica estadistica: this.estadisticasDisponibles){
+        	
+        	List<String> listaDeDatosEstadisticos = estadistica.obtenerEstadisticaResultante();
+        	List<String> listaEnFormatoYML = estadistica.generarListaEnFormatoYML( listaDeDatosEstadisticos);
+        	
+            contenidoEnFormatoYML.addAll( listaEnFormatoYML );
             }
+        
         return contenidoEnFormatoYML;
     }
 
@@ -145,32 +174,36 @@ public class ProcesadorEstadistico {
     }
 
     public void procesarModoOnDemand(String directorioDeEntrada){
-        this.nombreDirectorioDeEntrada = directorioDeEntrada;
-        List<Recorrido> listaDeRecorridos = new ArrayList<Recorrido>();
+    	
+        this.nombreDirectorioDeEntrada = directorioDeEntrada;       
         List<File> archivosZipDentroDelDirectorio = this.obtenerArchivosZipDentroDelDirectorio();
 
         for (File archivoZip: archivosZipDentroDelDirectorio){
-        	//METER WHILE LISTA NO VACIA, DAME 500 (ABANDONARLO)
-            listaDeRecorridos.addAll(this.procesarArchivoZip(archivoZip.toString()));
-            
-            Path origen = Paths.get(archivoZip.toString());
-            Path destino = Paths.get(this.nombreDirectorioDeArchivosProcesados + archivoZip.getName());
+           this.procesarArchivoZip(archivoZip.toString());
+           Path origen = Paths.get(archivoZip.toString());
+           Path destino = Paths.get(this.nombreDirectorioDeArchivosProcesados + archivoZip.getName());
 
-            try {
-                Files.move(origen,destino,REPLACE_EXISTING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+           try {
+               Files.move(origen,destino,REPLACE_EXISTING);
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
         }
-        this.guardarReporteEstadisticasADisco("salidaUnica.yml",this.generarReporteEstadisticas(listaDeRecorridos));
+        
+        this.guardarReporteEstadisticasADisco("salidaUnica.yml",this.generarReporteEstadisticas());
     }
 
     public void procesarModoDaemon(List<String> archivosAProcesar){
+    	
         for (String archivoAProcesar: archivosAProcesar ){
-            List<Recorrido> listaDeRecorridos = new ArrayList<Recorrido>();
-            listaDeRecorridos.addAll(this.procesarArchivoZip(archivoAProcesar));
-            File archivo = new File(archivoAProcesar);    
-            this.guardarReporteEstadisticasADisco( archivo.getName().subSequence(0, archivo.getName().length()-4) + ".salida.yml", this.generarReporteEstadisticas(listaDeRecorridos));
+         
+            this.procesarArchivoZip(archivoAProcesar);
+            File archivo = new File(archivoAProcesar);
+            
+            int finDeNombre = archivo.getName().length()-4;
+            String nombreYML =  archivo.getName().subSequence(0, finDeNombre) + ".salida.yml";
+            
+            this.guardarReporteEstadisticasADisco( nombreYML, this.generarReporteEstadisticas());
             Path origen = Paths.get(archivoAProcesar);
             Path destino = Paths.get(this.nombreDirectorioDeArchivosProcesados + archivo.getName());
 
@@ -188,7 +221,6 @@ public class ProcesadorEstadistico {
 
         if(directorio.exists()){
             File[] listaDeArchivos = directorio.listFiles();
-
 
             for (File file : listaDeArchivos){
                 if (file.isFile() && file.getName().endsWith(".zip")){

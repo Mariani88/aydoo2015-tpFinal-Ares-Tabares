@@ -9,68 +9,48 @@ import java.util.TreeMap;
 
 public class EstadisticaBicicletaMenosUsada extends Estadistica {
 
+	private Map<String,Integer> historial;
+	
 	public EstadisticaBicicletaMenosUsada() {
 		
 		this.nombreEstadistica = "Bicicletas menos usadas";
-
+		this.historial = new TreeMap<String,Integer>();
 	}
 	
 	@Override
-	public List<String> generarEstadistica(List<Recorrido> listaDeRecorridos){
-		
-		List<String> listaDeResultados = new LinkedList<String>();
-		Map<String,Integer> mapa = new TreeMap<String,Integer>();
-		
-		try {	
+	public void generarEstadistica(List<Recorrido> listaDeRecorridos) {
 
-			for(Recorrido recorrido : listaDeRecorridos){
-	
-				if(mapa.containsKey(recorrido.getBicicletaId())){
-	
-					mapa.put(recorrido.getBicicletaId(), mapa.get(recorrido.getBicicletaId())+1);
-	
-				}
-	
-				else{
-	
-					mapa.put(recorrido.getBicicletaId(),1);
-	
-				}
-	
+		for (Recorrido recorrido : listaDeRecorridos) {
+
+			if (this.historial.containsKey(recorrido.getBicicletaId())) {
+
+				int uso = this.historial.get( recorrido.getBicicletaId() ) + 1;
+				this.historial.put(recorrido.getBicicletaId(),uso);
+
+			}else {
+				this.historial.put(recorrido.getBicicletaId(), 1);
 			}
-			//BORRAR ESTA LINEA Y HACER EL METODO VOID
-			listaDeResultados = buscarMinimo(mapa);
-	
 		}
-	
-		catch (Exception e){
-	
-			e.printStackTrace();
-	
-		}
-
-	return listaDeResultados;
 
 	}
-	//HACER METODO PUBLICO Y CAMBIARLE EL NOMBRE POR "AISLAR INFORMACION", PONERLO EN CLASE PADRE
-	private List<String> buscarMinimo(Map<String, Integer> mapa) {
+	
+	public List<String> obtenerEstadisticaResultante() {
 		
 		List<String> listaDeResultados = new LinkedList<String>();
 		
-		int minimo = Collections.min(mapa.values());
-
-		for (Entry<String, Integer> entry : mapa.entrySet()) {  
-
-			if (entry.getValue()==minimo) {
-		
-				listaDeResultados.add(entry.getKey());     
-
+		if ( !this.historial.isEmpty()){
+			int minimo = Collections.min(this.historial.values());
+			
+			for (Entry<String, Integer> entry : this.historial.entrySet()) {  
+	
+				if (entry.getValue()==minimo) {
+			
+					listaDeResultados.add(entry.getKey());     
+				}
 			}
-
 		}
 	
-		return listaDeResultados;
-	
+		return listaDeResultados;	
 	}
 	
 	public List<String> generarListaEnFormatoYML(List<String> lista) {
@@ -81,11 +61,8 @@ public class EstadisticaBicicletaMenosUsada extends Estadistica {
 		for (String string : lista){
 			
 			listaFormateada.add("    id: " + string);	
-			
 		} 
 
 		return listaFormateada;
-		
 	}
-
 }

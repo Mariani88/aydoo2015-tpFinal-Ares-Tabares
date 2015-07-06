@@ -9,86 +9,65 @@ import java.util.Map.Entry;
 
 public class EstadisticaRecorridoMasRealizado extends Estadistica {
 
+	private Map<String, Integer> historial;
+
 	public EstadisticaRecorridoMasRealizado() {
-		
+
 		this.nombreEstadistica = "Recorrido mas realizado";
-
+		this.historial = new TreeMap<String, Integer>();
 	}
-	
-public List<String> generarEstadistica(List<Recorrido> listaDeRecorridos){
-		
-		List<String> listaDeResultados = new LinkedList<String>();
 
-		try {
+	public void generarEstadistica(List<Recorrido> listaDeRecorridos) {
 
-			Map<String,Integer> mapa = new TreeMap<String,Integer>();
-			String stringTemporal;
+		String stringTemporal;
 
-			for	(Recorrido recorrido : listaDeRecorridos){
-				
-				stringTemporal = recorrido.getOrigenEstacionId() + ";" + recorrido.getDestinoEstacionId();
-				
-				
-				if(mapa.containsKey(stringTemporal)){
-					
-					mapa.put(stringTemporal, mapa.get(stringTemporal)+1);
-										
-				}
-				
-				else{
-					
-					mapa.put(stringTemporal,1);
-					
-				}
-				
-				
+		for (Recorrido recorrido : listaDeRecorridos) {
+
+			stringTemporal = recorrido.getOrigenEstacionId() + ";"
+					+ recorrido.getDestinoEstacionId();
+
+			if (this.historial.containsKey(stringTemporal)) {
+
+				this.historial.put(stringTemporal,
+						this.historial.get(stringTemporal) + 1);
+			}else {
+				this.historial.put(stringTemporal, 1);
 			}
-			//BORRAR ESTA LINEA Y HACER EL METODO VOID
-			listaDeResultados = buscarMaximo(mapa);
 		}
-		
-		catch (Exception e){
-			
-			e.printStackTrace();
-			
-		}
-		 
-		 return listaDeResultados;
-		
 	}
 
-//HACER METODO PUBLICO Y CAMBIARLE EL NOMBRE POR "AISLAR INFORMACION", PONERLO EN CLASE PADRE
-	private List<String> buscarMaximo(Map<String, Integer> mapa) {
-		
+	
+	public List<String> obtenerEstadisticaResultante() {
+
 		List<String> listaDeResultados = new LinkedList<String>();
-		int maximo = Collections.max(mapa.values());
-	
-		 for (Entry<String, Integer> entry : mapa.entrySet()) {  
-		        
-			 if (entry.getValue()==maximo) {
-		            
-				 listaDeResultados.add(entry.getKey());     
-		     
-			 }
-		 }
-	
-		 return listaDeResultados;
-}
-	
-	public List<String> generarListaEnFormatoYML(List<String> lista){
 		
+		if (!this.historial.isEmpty()){
+			int maximo = Collections.max(this.historial.values());
+	
+			for (Entry<String, Integer> entry : this.historial.entrySet()) {
+	
+				if (entry.getValue() == maximo) {
+	
+					listaDeResultados.add(entry.getKey());
+				}
+			}
+		}
+		
+		return listaDeResultados;
+	}
+
+	public List<String> generarListaEnFormatoYML(List<String> lista) {
+
 		List<String> listaFormateada = new LinkedList<String>();
 		listaFormateada.add(nombreEstadistica + ":");
-		
-		for (String string : lista){
-			
+
+		for (String string : lista) {
+
 			String[] partes = string.split(";");
-			listaFormateada.add("    id origen: "+ partes[0]);
-			listaFormateada.add("    id destino: "+ partes[1]);
-			
+			listaFormateada.add("    id origen: " + partes[0]);
+			listaFormateada.add("    id destino: " + partes[1]);
 		}
-		
+
 		return listaFormateada;
 	}
-
 }

@@ -8,71 +8,45 @@ import java.util.Map.Entry;
 
 public class EstadisticaBicicletaMasUsada extends Estadistica {
 
+	private Map<String,Integer> historial;
+	
 	public EstadisticaBicicletaMasUsada() {
 		
 		this.nombreEstadistica = "Bicicletas mas usadas";
-	
+		this.historial = new TreeMap<String,Integer>();
 	}
 	
 	@Override
-	public List<String> generarEstadistica(List<Recorrido> listaDeRecorridos){
-		
-		List<String> listaDeResultados = new LinkedList<String>();
-		Map<String,Integer> mapa = new TreeMap<String,Integer>();
-	
-		
-		try {
-	
-			for(Recorrido recorrido : listaDeRecorridos){
+	public void generarEstadistica(List<Recorrido> listaDeRecorridos){
 
-				if(mapa.containsKey(recorrido.getBicicletaId())){
+		for (Recorrido recorrido : listaDeRecorridos) {
+			if (this.historial.containsKey(recorrido.getBicicletaId())) {
 
-					mapa.put(recorrido.getBicicletaId(), mapa.get(recorrido.getBicicletaId())+1);
-
-				}
-
-				else{
-
-					mapa.put(recorrido.getBicicletaId(),1);
-
-				}
-
+				int uso = this.historial.get(recorrido.getBicicletaId()) + 1;
+				this.historial.put(recorrido.getBicicletaId(), uso);
+			} else {
+				this.historial.put(recorrido.getBicicletaId(), 1);
 			}
-			//BORRAR ESTA LINEA Y HACER EL METODO VOID
-			listaDeResultados = buscarMaximo(mapa);
-		
 		}
-		
-		catch (Exception e){
-			
-			e.printStackTrace();
-			
-		}
-		
-			
-			return listaDeResultados;
-			
 	}
 
-	//HACER METODO PUBLICO Y CAMBIARLE EL NOMBRE POR "AISLAR INFORMACION", PONERLO EN CLASE PADRE
-	private List<String> buscarMaximo(Map<String, Integer> mapa) {
+	
+	public List<String> obtenerEstadisticaResultante() {
 		
 		List<String> listaDeResultados = new LinkedList<String>();
 		
-		int maximo = Collections.max(mapa.values());
+		if (!this.historial.isEmpty()){
+			int maximo = Collections.max(this.historial.values());
+			for (Entry<String, Integer> entry : this.historial.entrySet()) {  
 
-		for (Entry<String, Integer> entry : mapa.entrySet()) {  
-
-			if (entry.getValue()==maximo) {
-		
-				listaDeResultados.add(entry.getKey());     
-
+				if (entry.getValue()==maximo) {
+					
+					listaDeResultados.add(entry.getKey());     
+				}
 			}
-
 		}
-	
+			
 		return listaDeResultados;
-	
 	}
 	
 	public List<String> generarListaEnFormatoYML(List<String> lista) {
@@ -83,12 +57,8 @@ public class EstadisticaBicicletaMasUsada extends Estadistica {
 		for (String string : lista){
 			
 			listaFormateada.add("    id: " + string);	
-			
 		} 
 
-		return listaFormateada;
-		
+		return listaFormateada;	
 	}
-
-
 }

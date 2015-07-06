@@ -6,9 +6,13 @@ public abstract class Estadistica {
 
 	protected String nombreEstadistica;
 
-	protected abstract List<String> generarEstadistica(List<Recorrido> listaDeRecorridos);
+	protected abstract void generarEstadistica(List<Recorrido> listaDeRecorridos);
+	
+	public abstract List<String> obtenerEstadisticaResultante ();
 
 	protected abstract List<String> generarListaEnFormatoYML(List<String> lista);
+		
+	
 	
 	public String getNombreEstadistica() {
 		return nombreEstadistica;

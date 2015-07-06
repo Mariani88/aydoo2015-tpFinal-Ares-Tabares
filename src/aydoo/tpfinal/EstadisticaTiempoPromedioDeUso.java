@@ -5,42 +5,39 @@ import java.util.List;
 
 public class EstadisticaTiempoPromedioDeUso extends Estadistica {
 
+	private double sumaDeTiempoEnRecorridos;
+	private int cantidadDeBicicletas;
+	
 	public EstadisticaTiempoPromedioDeUso() {
 		
 		this.nombreEstadistica = "Tiempo promedio de uso";
-
+		this.sumaDeTiempoEnRecorridos = 0.0;
+		this.cantidadDeBicicletas = 0;
 	}
 	
-	public List<String> generarEstadistica(List<Recorrido> listaDeRecorridos){
+	public void generarEstadistica(List<Recorrido> listaDeRecorridos) {
 		
-		List<String> listaDeResultados = new LinkedList<String>();
-		double sumaDeTiempoEnRecorridos=0.0;
-		
-		try {
-		
-			for (Recorrido recorrido : listaDeRecorridos){
-				
-				sumaDeTiempoEnRecorridos += recorrido.getTiempoDeUso();
-				
-			}
-		
-		//MANDAR LAS LINEAS DE ABAJO AL METODO A AGREGAR "AISLAR DATO" Y CONVERTIR METODO A VOID
-			if (sumaDeTiempoEnRecorridos>0){
-				
-				listaDeResultados.add(Double.toString(Math.round(sumaDeTiempoEnRecorridos/listaDeRecorridos.size())));
-			
-			}
-			
+		for (Recorrido recorrido : listaDeRecorridos) {
+
+			sumaDeTiempoEnRecorridos += recorrido.getTiempoDeUso();
 		}
 		
-		catch (Exception e){
-			
-			e.printStackTrace();
-			
+		this.cantidadDeBicicletas+=listaDeRecorridos.size();
+	}
+	
+	@Override
+	public List<String> obtenerEstadisticaResultante() {
+		
+		List<String> listaDeResultados = new LinkedList<String>();
+		
+		if (sumaDeTiempoEnRecorridos > 0) {
+
+			listaDeResultados
+					.add(Double.toString(Math.round(sumaDeTiempoEnRecorridos
+							/ this.cantidadDeBicicletas)));
 		}
 		
 		return listaDeResultados;
-		
 	}
 	
 	public List<String> generarListaEnFormatoYML(List<String> lista) {
@@ -51,5 +48,4 @@ public class EstadisticaTiempoPromedioDeUso extends Estadistica {
 		return listaFormateada;
 		
 	}
-
 }

@@ -48,7 +48,6 @@ public class ProcesadorEstadisticoTest {
         
 		volverArchivoAlOrigen("archivosProcesados/CSVConTresLineas.zip",DIRECTORIO_CON_DOS_ZIPS+"/CSVConTresLineas.zip");
 		volverArchivoAlOrigen("archivosProcesados/CSVConUnaLinea.zip",DIRECTORIO_CON_DOS_ZIPS+"/CSVConUnaLinea.zip");
-	
     }
     
 	private void volverArchivoAlOrigen(String directorioOrigen, String directorioDestino)

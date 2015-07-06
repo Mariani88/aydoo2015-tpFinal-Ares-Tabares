@@ -33,19 +33,22 @@ public class EstadisticaBicicletaMenosUsadaTest {
 		listaDeRecorridos.add(recorrido5);
 		
 		Estadistica menosUsada = new EstadisticaBicicletaMenosUsada();
-				
-		Assert.assertTrue(menosUsada.generarEstadistica(listaDeRecorridos).contains("350"));
+		menosUsada.generarEstadistica(listaDeRecorridos);
+		List <String> listaEsperada = menosUsada.obtenerEstadisticaResultante();
+		
+		Assert.assertTrue(listaEsperada.contains("350"));
 			
 	}
 	
 	@Test
-	public void cuandoGeneroUnaEstadisticaConUnaListaVaciaDebeLanzaeUnaExcepcionYDevolverUnaListaVacia(){
+	public void cuandoGeneroUnaEstadisticaConUnaListaVaciaDebeDevolverUnaListaVacia(){
 		
 		List<Recorrido> listaDeRecorridos = new LinkedList<Recorrido>();
 		Estadistica menosUsada = new EstadisticaBicicletaMenosUsada();
+		menosUsada.generarEstadistica(listaDeRecorridos);
+		List <String> listaEsperada = menosUsada.obtenerEstadisticaResultante();
 		
-		Assert.assertTrue(menosUsada.generarEstadistica(listaDeRecorridos).isEmpty());
-		
+		Assert.assertTrue(listaEsperada.isEmpty());
 	}
 
 	@Test
@@ -66,10 +69,13 @@ public class EstadisticaBicicletaMenosUsadaTest {
 		
 		Estadistica menosUsada = new EstadisticaBicicletaMenosUsada();
 		
-		Assert.assertTrue((menosUsada.generarEstadistica(listaDeRecorridos).size()==3));
-		Assert.assertTrue(menosUsada.generarEstadistica(listaDeRecorridos).contains("350"));
-		Assert.assertTrue(menosUsada.generarEstadistica(listaDeRecorridos).contains("150"));
-		Assert.assertTrue(menosUsada.generarEstadistica(listaDeRecorridos).contains("460"));
+		menosUsada.generarEstadistica(listaDeRecorridos);
+		List <String> listaEsperada = menosUsada.obtenerEstadisticaResultante();
+		
+		Assert.assertTrue((listaEsperada.size()==3));
+		Assert.assertTrue(listaEsperada.contains("350"));
+		Assert.assertTrue(listaEsperada.contains("150"));
+		Assert.assertTrue(listaEsperada.contains("460"));
 		
 	}
 	
@@ -90,11 +96,12 @@ public class EstadisticaBicicletaMenosUsadaTest {
 		listaDeRecorridos.add(recorrido5);
 		
 		Estadistica menosUsada = new EstadisticaBicicletaMenosUsada();
-		List<String> lista = menosUsada.generarEstadistica(listaDeRecorridos);
+		menosUsada.generarEstadistica(listaDeRecorridos);
+		List<String> listaEsperada = menosUsada.obtenerEstadisticaResultante();
 	
-		Assert.assertTrue(menosUsada.generarListaEnFormatoYML(lista).size()==2);
-		Assert.assertTrue(menosUsada.generarListaEnFormatoYML(lista).contains("Bicicletas menos usadas:"));
-		Assert.assertTrue(menosUsada.generarListaEnFormatoYML(lista).contains("    id: 350"));
+		Assert.assertTrue(menosUsada.generarListaEnFormatoYML(listaEsperada).size()==2);
+		Assert.assertTrue(menosUsada.generarListaEnFormatoYML(listaEsperada).contains("Bicicletas menos usadas:"));
+		Assert.assertTrue(menosUsada.generarListaEnFormatoYML(listaEsperada).contains("    id: 350"));
 		
 	}
 

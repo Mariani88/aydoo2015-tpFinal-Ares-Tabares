@@ -33,9 +33,10 @@ public class EstadisticaTiempoPromedioDeUsoTest {
 		listaDeRecorridos.add(recorrido5);
 		
 		Estadistica tiempoPromedio = new EstadisticaTiempoPromedioDeUso();
-				
-		Assert.assertTrue(tiempoPromedio.generarEstadistica(listaDeRecorridos).contains("58.0"));
-			
+		tiempoPromedio.generarEstadistica(listaDeRecorridos);
+		List <String> listaEsperada = tiempoPromedio.obtenerEstadisticaResultante();
+		
+		Assert.assertTrue(listaEsperada.contains("58.0"));	
 	}
 	
 	@Test
@@ -44,9 +45,10 @@ public class EstadisticaTiempoPromedioDeUsoTest {
 		List<Recorrido> listaDeRecorridos = new LinkedList<Recorrido>();
 		Estadistica tiempoPromedio = new EstadisticaTiempoPromedioDeUso();
 		
-		Assert.assertTrue(tiempoPromedio.generarEstadistica(listaDeRecorridos).isEmpty());
-
+		tiempoPromedio.generarEstadistica(listaDeRecorridos);
+		List<String> listaEsperada = tiempoPromedio.obtenerEstadisticaResultante();
 		
+		Assert.assertTrue(listaEsperada.isEmpty());
 	}
 	
 	@Test
@@ -66,12 +68,13 @@ public class EstadisticaTiempoPromedioDeUsoTest {
 		listaDeRecorridos.add(recorrido5);
 		
 		Estadistica tiempoPromedio = new EstadisticaTiempoPromedioDeUso();
-		List<String> lista = tiempoPromedio.generarEstadistica(listaDeRecorridos);
-	
-		Assert.assertTrue(tiempoPromedio.generarListaEnFormatoYML(lista).size()==1);
-		Assert.assertTrue(tiempoPromedio.generarListaEnFormatoYML(lista).contains("Tiempo promedio de uso: 58.0"));
+		tiempoPromedio.generarEstadistica(listaDeRecorridos);
 		
-		
-	}
+		List<String> lista = tiempoPromedio
+				.generarListaEnFormatoYML(tiempoPromedio
+						.obtenerEstadisticaResultante());
 
+		Assert.assertTrue(lista.size()==1);
+		Assert.assertTrue(lista.contains("Tiempo promedio de uso: 58.0"));	
+	}
 }

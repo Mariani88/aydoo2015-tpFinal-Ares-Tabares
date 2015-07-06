@@ -33,9 +33,10 @@ public class EstadisticaRecorridoMasRealizadoTest {
 		listaDeRecorridos.add(recorrido5);
 		
 		Estadistica recorridoMasRealizado = new EstadisticaRecorridoMasRealizado();
-				
-		Assert.assertTrue(recorridoMasRealizado.generarEstadistica(listaDeRecorridos).contains("6;5"));
-			
+		recorridoMasRealizado.generarEstadistica(listaDeRecorridos);
+		List <String> listaEsperada = recorridoMasRealizado.obtenerEstadisticaResultante();
+		
+		Assert.assertTrue(listaEsperada.contains("6;5"));
 	}
 	
 	@Test
@@ -44,8 +45,9 @@ public class EstadisticaRecorridoMasRealizadoTest {
 		List<Recorrido> listaDeRecorridos = new LinkedList<Recorrido>();
 		Estadistica recorridoMasRealizado = new EstadisticaRecorridoMasRealizado();
 		
-		Assert.assertTrue(recorridoMasRealizado.generarEstadistica(listaDeRecorridos).isEmpty());
-		
+		recorridoMasRealizado.generarEstadistica(listaDeRecorridos);
+		List <String> listaEsperada = recorridoMasRealizado.obtenerEstadisticaResultante();
+		Assert.assertTrue(listaEsperada.isEmpty());
 	}
 	
 	@Test
@@ -65,11 +67,13 @@ public class EstadisticaRecorridoMasRealizadoTest {
 		listaDeRecorridos.add(recorrido5);
 		
 		Estadistica recorridoMasRealizado = new EstadisticaRecorridoMasRealizado();
+		recorridoMasRealizado.generarEstadistica(listaDeRecorridos);
+		List <String> listaEsperada = recorridoMasRealizado.obtenerEstadisticaResultante();
 		
-		Assert.assertTrue(recorridoMasRealizado.generarEstadistica(listaDeRecorridos).size()==2);
-		Assert.assertTrue(recorridoMasRealizado.generarEstadistica(listaDeRecorridos).contains("6;5"));
-		Assert.assertTrue(recorridoMasRealizado.generarEstadistica(listaDeRecorridos).contains("7;8"));
 		
+		Assert.assertTrue(listaEsperada.size()==2);
+		Assert.assertTrue(listaEsperada.contains("6;5"));
+		Assert.assertTrue(listaEsperada.contains("7;8"));
 	}
 	
 	@Test
@@ -89,7 +93,9 @@ public class EstadisticaRecorridoMasRealizadoTest {
 		listaDeRecorridos.add(recorrido5);
 		
 		Estadistica recorridoMasRealizado = new EstadisticaRecorridoMasRealizado();
-		List<String> listaDeResultados = recorridoMasRealizado.generarEstadistica(listaDeRecorridos);
+		recorridoMasRealizado.generarEstadistica(listaDeRecorridos);
+		
+		List<String> listaDeResultados = recorridoMasRealizado.obtenerEstadisticaResultante();
 		recorridoMasRealizado.generarListaEnFormatoYML(listaDeResultados);
 	
 		Assert.assertTrue(recorridoMasRealizado.generarListaEnFormatoYML(listaDeResultados).size()==5);
@@ -97,8 +103,6 @@ public class EstadisticaRecorridoMasRealizadoTest {
 		Assert.assertTrue(recorridoMasRealizado.generarListaEnFormatoYML(listaDeResultados).contains("    id origen: 6"));
 		Assert.assertTrue(recorridoMasRealizado.generarListaEnFormatoYML(listaDeResultados).contains("    id destino: 5"));
 		Assert.assertTrue(recorridoMasRealizado.generarListaEnFormatoYML(listaDeResultados).contains("    id origen: 7"));
-		Assert.assertTrue(recorridoMasRealizado.generarListaEnFormatoYML(listaDeResultados).contains("    id destino: 8"));
-		
+		Assert.assertTrue(recorridoMasRealizado.generarListaEnFormatoYML(listaDeResultados).contains("    id destino: 8"));	
 	}
-
 }
