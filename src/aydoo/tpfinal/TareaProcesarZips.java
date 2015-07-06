@@ -24,7 +24,13 @@ public class TareaProcesarZips extends TimerTask{
 	@Override
 	public void run() {
 		 List<String> contenidoInicialDelDirectorio = this.getContenidoDelDirectorio(this.directorioAMonitorear);
-		 this.procesadorEstadistico.procesarModoDaemon(contenidoInicialDelDirectorio);
+		 int detectado = contenidoInicialDelDirectorio.size();
+		 
+		 if (detectado > 0){
+			 ProcesadorEstadistico.tiempoInicial = System.currentTimeMillis();
+			 System.out.println( detectado + " archivos nuevos detectados");
+			 this.procesadorEstadistico.procesarModoDaemon(contenidoInicialDelDirectorio);
+		 }
 	}
 	
     private List<String> getContenidoDelDirectorio(String directorio){

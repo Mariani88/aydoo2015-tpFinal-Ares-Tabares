@@ -1,6 +1,7 @@
 package aydoo.tpfinal;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,7 @@ public class EstadisticaBicicletaMenosUsada extends Estadistica {
 	public EstadisticaBicicletaMenosUsada() {
 		
 		this.nombreEstadistica = "Bicicletas menos usadas";
-		this.historial = new TreeMap<String,Integer>();
+		this.historial = new HashMap<String,Integer>();
 	}
 	
 	@Override

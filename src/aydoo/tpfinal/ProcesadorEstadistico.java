@@ -24,7 +24,8 @@ public class ProcesadorEstadistico {
     private final String nombreDirectorioDeSalidaDeReportes;
     private List<Estadistica> estadisticasDisponibles;
     private final String encabezado;
-
+    static double tiempoInicial;
+    
     public ProcesadorEstadistico() {
         this.nombreDirectorioDeArchivosProcesados = "archivosProcesados/";
         this.nombreDirectorioDeSalidaDeReportes = "reportes/";
@@ -35,19 +36,17 @@ public class ProcesadorEstadistico {
 
     public static void main(String[] args) {
     	
-    	long tiempoInicial = System.currentTimeMillis();
+    	
     	
         switch (args.length){
 
         	//Modo on-Demand
         	case 1:
                 if (validarDirectorioDeEntrada(args[0])){
+                	tiempoInicial = System.currentTimeMillis();
                 	System.out.println("Procesando Archivos ...");
                     ProcesadorEstadistico procesadorOnDemand = new ProcesadorEstadistico();
                     procesadorOnDemand.procesarModoOnDemand(args[0]);
-                    //AGREGAR TIEMPO FINAL Y HACER LA RESTA CON TIEMPO INICIAL
-                    //AGREGAR YML
-                    System.out.println("Completado");
                     break;
                 }
                 else{
@@ -73,12 +72,7 @@ public class ProcesadorEstadistico {
             default:
                 imprimirMensajeDeErrorArgumentosInvalidos();
                 break;
-
         }
-        
-        long tiempo  = System.currentTimeMillis() - tiempoInicial ; 
-        System.out.println ("tiempo insumido:" + tiempo/1000 + " segundos");
-
     }
 
     private void procesarArchivoZip(String rutaAZip) {
@@ -165,9 +159,15 @@ public class ProcesadorEstadistico {
     }
 
     private void guardarReporteEstadisticasADisco(String nombreArchivoSalida, List<String> contenidoEnFormatoYML){
-        Path archivo = Paths.get(this.nombreDirectorioDeSalidaDeReportes + nombreArchivoSalida);
+        
+    	Path archivo = Paths.get(this.nombreDirectorioDeSalidaDeReportes + nombreArchivoSalida);
+    	double tiempo  = (System.currentTimeMillis() - tiempoInicial)/1000 ; 
+    	
+    	contenidoEnFormatoYML.add("tiempo insumido:"+ tiempo+ " segundos");
+        
         try {
-            Files.write(archivo, contenidoEnFormatoYML, StandardCharsets.UTF_8);
+            Files.write(archivo, contenidoEnFormatoYML, StandardCharsets.UTF_8);    
+            System.out.println ("tiempo insumido:" + tiempo+ " segundos");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -178,13 +178,18 @@ public class ProcesadorEstadistico {
         this.nombreDirectorioDeEntrada = directorioDeEntrada;       
         List<File> archivosZipDentroDelDirectorio = this.obtenerArchivosZipDentroDelDirectorio();
 
+        float procesados = 0;
+        float total = archivosZipDentroDelDirectorio.size();
         for (File archivoZip: archivosZipDentroDelDirectorio){
+        	
            this.procesarArchivoZip(archivoZip.toString());
            Path origen = Paths.get(archivoZip.toString());
            Path destino = Paths.get(this.nombreDirectorioDeArchivosProcesados + archivoZip.getName());
 
            try {
                Files.move(origen,destino,REPLACE_EXISTING);
+               procesados+=1;
+               System.out.println (procesados*100/total + "% completado");
            } catch (IOException e) {
                e.printStackTrace();
            }
@@ -196,10 +201,11 @@ public class ProcesadorEstadistico {
     public void procesarModoDaemon(List<String> archivosAProcesar){
     	
         for (String archivoAProcesar: archivosAProcesar ){
-         
+        	
+        	File archivo = new File(archivoAProcesar);
+        	System.out.println("procesando archivo:"+ archivo.getName()+ " espere...");
             this.procesarArchivoZip(archivoAProcesar);
-            File archivo = new File(archivoAProcesar);
-            
+           
             int finDeNombre = archivo.getName().length()-4;
             String nombreYML =  archivo.getName().subSequence(0, finDeNombre) + ".salida.yml";
             
@@ -209,6 +215,7 @@ public class ProcesadorEstadistico {
 
             try {
                 Files.move(origen,destino,REPLACE_EXISTING);
+                System.out.println("archivo:"+ archivo.getName() + " procesado");
             } catch (IOException e) {
                 e.printStackTrace();
             }

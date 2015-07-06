@@ -1,6 +1,7 @@
 package aydoo.tpfinal;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,7 @@ public class EstadisticaRecorridoMasRealizado extends Estadistica {
 	public EstadisticaRecorridoMasRealizado() {
 
 		this.nombreEstadistica = "Recorrido mas realizado";
-		this.historial = new TreeMap<String, Integer>();
+		this.historial = new HashMap<String, Integer>();
 	}
 
 	public void generarEstadistica(List<Recorrido> listaDeRecorridos) {
