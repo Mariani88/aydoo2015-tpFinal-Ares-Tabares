@@ -19,11 +19,11 @@ public class EstadisticaRecorridoMasRealizadoTest {
 	@Test
 	public void generarEstadisticaParaRecorridoMasRealizadoDebeDevolverUnPar6Coma5(){
 		
-		Recorrido recorrido1 = new Recorrido("501","422","2010-12-01 13:26:15","6","DERECHO","2010-12-01 14:23:50","5","ADUANA","58");
-		Recorrido recorrido2 = new Recorrido("501","422","2010-12-01 13:26:15","6","DERECHO","2010-12-01 14:23:50","5","ADUANA","58");
-		Recorrido recorrido3 = new Recorrido("501","350","2010-12-01 13:26:15","6","DERECHO","2010-12-01 14:23:50","5","ADUANA","58");
-		Recorrido recorrido4 = new Recorrido("501","422","2010-12-01 13:26:15","6","DERECHO","2010-12-01 14:23:50","5","ADUANA","58");
-		Recorrido recorrido5 = new Recorrido("1720","460","2010-12-01 13:22:19","3","RETIRO","2010-12-01 14:21:41","3","RETIRO","59");
+		Recorrido recorrido1 = new Recorrido("422","6","DERECHO","5","ADUANA","58");
+		Recorrido recorrido2 = new Recorrido("422","6","DERECHO","5","ADUANA","58");
+		Recorrido recorrido3 = new Recorrido("350","6","DERECHO","5","ADUANA","58");
+		Recorrido recorrido4 = new Recorrido("422","6","DERECHO","5","ADUANA","58");
+		Recorrido recorrido5 = new Recorrido("460","3","RETIRO","3","RETIRO","59");
 		
 		List<Recorrido> listaDeRecorridos = new LinkedList<Recorrido>();
 		listaDeRecorridos.add(recorrido1);
@@ -53,11 +53,11 @@ public class EstadisticaRecorridoMasRealizadoTest {
 	@Test
 	public void cuandoGeneroUnaEstadisticaQueContieneMasDeUnValorDebeDevolverUnaListaQueLosContenga(){
 		
-		Recorrido recorrido1 = new Recorrido("501","422","2010-12-01 13:26:15","6","DERECHO","2010-12-01 14:23:50","5","ADUANA","58");
-		Recorrido recorrido2 = new Recorrido("501","422","2010-12-01 13:26:15","6","DERECHO","2010-12-01 14:23:50","5","ADUANA","58");
-		Recorrido recorrido3 = new Recorrido("501","350","2010-12-01 13:26:15","7","DERECHO","2010-12-01 14:23:50","8","ADUANA","58");
-		Recorrido recorrido4 = new Recorrido("501","422","2010-12-01 13:26:15","7","DERECHO","2010-12-01 14:23:50","8","ADUANA","58");
-		Recorrido recorrido5 = new Recorrido("1720","460","2010-12-01 13:22:19","3","RETIRO","2010-12-01 14:21:41","3","RETIRO","59");
+		Recorrido recorrido1 = new Recorrido("422","6","DERECHO","5","ADUANA","58");
+		Recorrido recorrido2 = new Recorrido("422","6","DERECHO","5","ADUANA","58");
+		Recorrido recorrido3 = new Recorrido("350","7","DERECHO","8","ADUANA","58");
+		Recorrido recorrido4 = new Recorrido("422","7","DERECHO","8","ADUANA","58");
+		Recorrido recorrido5 = new Recorrido("460","3","RETIRO","3","RETIRO","59");
 		
 		List<Recorrido> listaDeRecorridos = new LinkedList<Recorrido>();
 		listaDeRecorridos.add(recorrido1);
@@ -79,11 +79,11 @@ public class EstadisticaRecorridoMasRealizadoTest {
 	@Test
 	public void generarUnaEstadisticaEnFormatoYMLDebeContenerLosRecorridosEnElFormatoYML(){
 		
-		Recorrido recorrido1 = new Recorrido("501","422","2010-12-01 13:26:15","6","DERECHO","2010-12-01 14:23:50","5","ADUANA","58");
-		Recorrido recorrido2 = new Recorrido("501","422","2010-12-01 13:26:15","6","DERECHO","2010-12-01 14:23:50","5","ADUANA","58");
-		Recorrido recorrido3 = new Recorrido("501","350","2010-12-01 13:26:15","7","DERECHO","2010-12-01 14:23:50","8","ADUANA","58");
-		Recorrido recorrido4 = new Recorrido("501","422","2010-12-01 13:26:15","7","DERECHO","2010-12-01 14:23:50","8","ADUANA","58");
-		Recorrido recorrido5 = new Recorrido("1720","460","2010-12-01 13:22:19","3","RETIRO","2010-12-01 14:21:41","3","RETIRO","59");
+		Recorrido recorrido1 = new Recorrido("422","6","DERECHO","5","ADUANA","58");
+		Recorrido recorrido2 = new Recorrido("422","6","DERECHO","5","ADUANA","58");
+		Recorrido recorrido3 = new Recorrido("350","7","DERECHO","8","ADUANA","58");
+		Recorrido recorrido4 = new Recorrido("422","7","DERECHO","8","ADUANA","58");
+		Recorrido recorrido5 = new Recorrido("460","3","RETIRO","3","RETIRO","59");
 		
 		List<Recorrido> listaDeRecorridos = new LinkedList<Recorrido>();
 		listaDeRecorridos.add(recorrido1);

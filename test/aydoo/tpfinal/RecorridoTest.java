@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+//import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -18,7 +18,7 @@ public class RecorridoTest {
 
     @Before
     public void setUp(){
-        this.recorrido = new Recorrido("1036","403","2010-12-30 19:39:03","6","DERECHO","2010-12-30 19:46:03","3","RETIRO","7");
+        this.recorrido = new Recorrido("403","6","DERECHO","3","RETIRO","7");
     }
 
     @Test
@@ -26,16 +26,16 @@ public class RecorridoTest {
         Assert.assertEquals(7,this.recorrido.getTiempoDeUso());
     }
 
-    @Test
+    /*@Test
     public void  cuandoLeoUnaLineaDeStringsConCiertoOrigenFechaSeCreaElObjetoRecorridoYValidarElDiaDeLaFechaOrigen(){
 
         GregorianCalendar fechaEsperada = new GregorianCalendar(2010,11,30,19,39,03);
 
         Assert.assertEquals(fechaEsperada.get(Calendar.DAY_OF_MONTH),this.recorrido.getOrigenFecha().get(Calendar.DAY_OF_MONTH));
 
-    }
+    }*/
 
-    @Test
+/*    @Test
     public void crearRecorridoYValidarElAnioDeLaFechaOrigen(){
 
         GregorianCalendar fechaEsperada = new GregorianCalendar(2010,11,30,19,39,03);
@@ -78,7 +78,7 @@ public class RecorridoTest {
 
         Assert.assertEquals(fechaEsperada.get(Calendar.SECOND),this.recorrido.getOrigenFecha().get(Calendar.SECOND));
 
-    }
+    }*/
     
     @Test
     public void crearRecorridoYValidarSusAtributos() throws ParseException{
@@ -93,12 +93,12 @@ public class RecorridoTest {
     	Date dateDestino = dateFormatDestino.parse("2010-12-30 19:46:03");
     	destinoFecha.setTime(dateDestino);
     	
-    	Assert.assertEquals("1036", this.recorrido.getUsuarioId());
+    	//Assert.assertEquals("1036", this.recorrido.getUsuarioId());
     	Assert.assertEquals("403", this.recorrido.getBicicletaId());
-    	Assert.assertEquals(origenFecha, this.recorrido.getOrigenFecha());
+    	//Assert.assertEquals(origenFecha, this.recorrido.getOrigenFecha());
     	Assert.assertEquals("6", this.recorrido.getOrigenEstacionId());
     	Assert.assertEquals("DERECHO", this.recorrido.getOrigenNombre());
-    	Assert.assertEquals(destinoFecha, this.recorrido.getDestinoFecha());
+    	//Assert.assertEquals(destinoFecha, this.recorrido.getDestinoFecha());
     	Assert.assertEquals("3", this.recorrido.getDestinoEstacionId());
     	Assert.assertEquals("RETIRO", this.recorrido.getDestinoNombre());
     	Assert.assertEquals(7, this.recorrido.getTiempoDeUso());

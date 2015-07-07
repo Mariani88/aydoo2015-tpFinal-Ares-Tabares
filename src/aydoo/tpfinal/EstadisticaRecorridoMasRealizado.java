@@ -1,22 +1,37 @@
 package aydoo.tpfinal;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class EstadisticaRecorridoMasRealizado extends Estadistica {
 
 	private Map<String, Integer> historial;
-
+	private List<String> maximos;
+	private int maximo;
+	
 	public EstadisticaRecorridoMasRealizado() {
 
 		this.nombreEstadistica = "Recorrido mas realizado";
 		this.historial = new HashMap<String, Integer>();
+		this.maximos = new LinkedList<String> ();
+		this.maximo = -1;
 	}
 
+	private void aislarMaximos (String extremos, int uso){
+		
+		if (uso > this.maximo){
+			
+			this.maximo = uso;
+			this.maximos.clear();
+			this.maximos.add(extremos);
+		
+		}else if (uso == this.maximo){
+			this.maximos.add(extremos);
+		}
+	}
+	
 	public void generarEstadistica(List<Recorrido> listaDeRecorridos) {
 
 		String stringTemporal;
@@ -28,10 +43,12 @@ public class EstadisticaRecorridoMasRealizado extends Estadistica {
 
 			if (this.historial.containsKey(stringTemporal)) {
 
-				this.historial.put(stringTemporal,
-						this.historial.get(stringTemporal) + 1);
+				int uso = this.historial.get(stringTemporal) + 1;
+				this.historial.put(stringTemporal,uso);
+				this.aislarMaximos(stringTemporal, uso);
 			}else {
 				this.historial.put(stringTemporal, 1);
+				this.aislarMaximos(stringTemporal, 1);
 			}
 		}
 	}
@@ -42,15 +59,7 @@ public class EstadisticaRecorridoMasRealizado extends Estadistica {
 		List<String> listaDeResultados = new LinkedList<String>();
 		
 		if (!this.historial.isEmpty()){
-			int maximo = Collections.max(this.historial.values());
-	
-			for (Entry<String, Integer> entry : this.historial.entrySet()) {
-	
-				if (entry.getValue() == maximo) {
-	
-					listaDeResultados.add(entry.getKey());
-				}
-			}
+			listaDeResultados = this.maximos;
 		}
 		
 		return listaDeResultados;

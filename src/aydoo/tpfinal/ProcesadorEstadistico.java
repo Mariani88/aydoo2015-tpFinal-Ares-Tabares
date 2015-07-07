@@ -107,11 +107,10 @@ public class ProcesadorEstadistico {
 			String[] lineaSeparadaPorComas = linea.split(";");
 			
 			if (lineaSeparadaPorComas.length == 9) {
-				Recorrido recorrido = new Recorrido(lineaSeparadaPorComas[0],
-						lineaSeparadaPorComas[1], lineaSeparadaPorComas[2],
+				Recorrido recorrido = new Recorrido(lineaSeparadaPorComas[1],
 						lineaSeparadaPorComas[3], lineaSeparadaPorComas[4],
-						lineaSeparadaPorComas[5], lineaSeparadaPorComas[6],
-						lineaSeparadaPorComas[7], lineaSeparadaPorComas[8]);
+						lineaSeparadaPorComas[6], lineaSeparadaPorComas[7],
+						lineaSeparadaPorComas[8]);
 				listaDeRecorridos.add(recorrido);
 			}
 			volcarDatosEstadisticos(listaDeRecorridos, scanner);
