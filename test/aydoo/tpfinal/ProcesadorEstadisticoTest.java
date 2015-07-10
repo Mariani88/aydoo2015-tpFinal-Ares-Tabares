@@ -1,13 +1,16 @@
 package aydoo.tpfinal;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 
 public class ProcesadorEstadisticoTest {
@@ -36,6 +39,14 @@ public class ProcesadorEstadisticoTest {
 
         Assert.assertTrue(Files.size(reporteCSVConTresLineas) > 0);
         Assert.assertTrue(Files.size(reporteCSVConUnaLinea) > 0);
-
+        
+        volverArchivoAlOrigen();
     }
+    
+	private void volverArchivoAlOrigen() throws IOException {
+		Path origen = Paths.get("archivosProcesados");
+		Path destino = Paths.get("archivosAProcesar/directorioDePruebaConDosZip");
+		
+		 Files.move(origen,destino,REPLACE_EXISTING);
+	}
 }
