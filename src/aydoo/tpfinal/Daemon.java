@@ -16,7 +16,7 @@ public class Daemon {
 	}
 	
 	public void monitorear() {
-		this.temporizadorDeMonitoreo.schedule(this.tarea, 0, 3000);
+		this.temporizadorDeMonitoreo.schedule(this.tarea, 0, 5000);
 	}
 
 	public void pararMonitoreo() {

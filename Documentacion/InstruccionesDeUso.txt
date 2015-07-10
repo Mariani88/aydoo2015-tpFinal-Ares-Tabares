@@ -16,5 +16,4 @@ Como correr la applicacion:
 
 	java aydoo.tpfinal.ProcesadorEstadistico <DirectorioDeArchivos>
 
-	- Tener en cuenta que los archivos no seran movidos en este modo de ejecucion
 	- El archivo de salida se encontrara en: "DirectorioDelProyecto"/Build/reportes/

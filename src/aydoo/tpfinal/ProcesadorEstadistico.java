@@ -53,7 +53,7 @@ public class ProcesadorEstadistico {
             case 2:
                 if (args[1].equals("demonio")){
                     if (validarDirectorioDeEntrada(args[0])){
-                    	System.out.println("Modo demonio iniciado, para terminar presionar Ctrl+C");
+                    	System.out.println("Modo demonio iniciado");
                         ProcesadorEstadistico procesadorDaemon = new ProcesadorEstadistico();
                         Daemon daemon = new Daemon(args[0],procesadorDaemon);
                         daemon.monitorear();
@@ -165,28 +165,33 @@ public class ProcesadorEstadistico {
 
         float procesados = 0;
         float total = archivosZipDentroDelDirectorio.size();
-        for (File archivoZip: archivosZipDentroDelDirectorio){
-        	
-           this.procesarArchivoZip(archivoZip.toString());
-           Path origen = Paths.get(archivoZip.toString());
-           Path destino = Paths.get(this.nombreDirectorioDeArchivosProcesados + archivoZip.getName());
-
-           try {
-               Files.move(origen,destino,REPLACE_EXISTING);
-               procesados+=1;
-               System.out.println (procesados*100/total + "% completado");
-           } catch (IOException e) {
-               e.printStackTrace();
-           }
-        }
         
-        this.guardarReporteEstadisticasADisco("salidaUnica.yml",this.generarReporteEstadisticas());
+        if (total > 0 ){
+        	for (File archivoZip: archivosZipDentroDelDirectorio){
+            	
+                this.procesarArchivoZip(archivoZip.toString());
+                Path origen = Paths.get(archivoZip.toString());
+                Path destino = Paths.get(this.nombreDirectorioDeArchivosProcesados + archivoZip.getName());
+
+                try {
+                    Files.move(origen,destino,REPLACE_EXISTING);
+                    procesados+=1;
+                    System.out.println (procesados*100/total + "% completado");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+             }
+             
+             this.guardarReporteEstadisticasADisco("salidaUnica.yml",this.generarReporteEstadisticas());
+        }else{
+        	System.out.println ("el directorio especificado no contiene archivos a procesar");
+        }
     }
 
     public void procesarModoDaemon(List<String> archivosAProcesar){
     	
         for (String archivoAProcesar: archivosAProcesar ){
-        	
+        	tiempoInicial = System.currentTimeMillis();
         	File archivo = new File(archivoAProcesar);
         	System.out.println("procesando archivo:"+ archivo.getName()+ " espere...");
             this.procesarArchivoZip(archivoAProcesar);
@@ -253,19 +258,11 @@ public class ProcesadorEstadistico {
     }
 
     private static boolean validarDirectorioDeEntrada(String argumento){
-        boolean esValido;
+        boolean esValido = false;;
         File directorioDeEntrada = new File(argumento);
         if(directorioDeEntrada.isDirectory()){
-            String[] contenidoDelDirectorio = directorioDeEntrada.list();
-            if (contenidoDelDirectorio.length > 0){
-                esValido = true;
-            }
-            else{
-                esValido = false;
-            }
-        }
-        else{
-            esValido = false;
+           
+        	esValido = true;
         }
 
         return esValido;
