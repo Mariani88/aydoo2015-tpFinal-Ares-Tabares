@@ -152,6 +152,15 @@ public class ProcesadorEstadistico {
         for (File archivoZip: archivosZipDentroDelDirectorio){
         	//METER WHILE LISTA NO VACIA, DAME 500 (ABANDONARLO)
             listaDeRecorridos.addAll(this.procesarArchivoZip(archivoZip.toString()));
+            
+            Path origen = Paths.get(archivoZip.toString());
+            Path destino = Paths.get(this.nombreDirectorioDeArchivosProcesados + archivoZip.getName());
+
+            try {
+                Files.move(origen,destino,REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         this.guardarReporteEstadisticasADisco("salidaUnica.yml",this.generarReporteEstadisticas(listaDeRecorridos));
     }

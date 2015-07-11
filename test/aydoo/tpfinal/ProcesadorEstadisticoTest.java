@@ -15,22 +15,28 @@ import org.junit.Test;
 
 public class ProcesadorEstadisticoTest {
 
+	private static final String DIRECTORIO_CON_DOS_ZIPS = "archivosAProcesar/directorioDePruebaConDosZip";
+	private static final String DIRECTORIO_CON_UN_ZIP = "archivosAProcesar/directorioDePruebaConUnZipQueTieneUnSoloCSVConUnaLinea";
+
+	
     @Test
     public void cuandoElDirectorioDeEntradaTieneContenidoElProcesadorOnDemandDebeGenerarUnArchivoDeSalidaConTamanoMayorACero() throws IOException {
 
         ProcesadorEstadistico procesadorEstadistico = new ProcesadorEstadistico();
-        procesadorEstadistico.procesarModoOnDemand("archivosAProcesar/directorioDePruebaConUnZipQueTieneUnSoloCSVConUnaLinea");
+        procesadorEstadistico.procesarModoOnDemand(DIRECTORIO_CON_UN_ZIP);
         Path reporte = Paths.get("reportes/salidaUnica.yml");
 
         Assert.assertTrue(Files.size(reporte) > 0);
+        
+        volverArchivoAlOrigen("archivosProcesados/CSVConUnaLinea.zip", DIRECTORIO_CON_UN_ZIP+"/CSVConUnaLinea.zip");
     }
 
     @Test
     public void cuandoSePasaUnaListaDeDosArchivosElProcesadorOnDemandDebeGenerarDosArchivosDeSalidaConTamanoMayorACero() throws IOException {
 
         List<String> listaDeArchivosAProcesar = new ArrayList<>();
-        listaDeArchivosAProcesar.add("archivosAProcesar/directorioDePruebaConDosZip/CSVConTresLineas.zip");
-        listaDeArchivosAProcesar.add("archivosAProcesar/directorioDePruebaConDosZip/CSVConUnaLinea.zip");
+        listaDeArchivosAProcesar.add(DIRECTORIO_CON_DOS_ZIPS+"/CSVConTresLineas.zip");
+        listaDeArchivosAProcesar.add(DIRECTORIO_CON_DOS_ZIPS+"/CSVConUnaLinea.zip");
 
         ProcesadorEstadistico procesadorEstadistico = new ProcesadorEstadistico();
         procesadorEstadistico.procesarModoDaemon(listaDeArchivosAProcesar);
@@ -40,13 +46,16 @@ public class ProcesadorEstadisticoTest {
         Assert.assertTrue(Files.size(reporteCSVConTresLineas) > 0);
         Assert.assertTrue(Files.size(reporteCSVConUnaLinea) > 0);
         
-        volverArchivoAlOrigen();
+		volverArchivoAlOrigen("archivosProcesados/CSVConTresLineas.zip",DIRECTORIO_CON_DOS_ZIPS+"/CSVConTresLineas.zip");
+		volverArchivoAlOrigen("archivosProcesados/CSVConUnaLinea.zip",DIRECTORIO_CON_DOS_ZIPS+"/CSVConUnaLinea.zip");
+	
     }
     
-	private void volverArchivoAlOrigen() throws IOException {
-		Path origen = Paths.get("archivosProcesados");
-		Path destino = Paths.get("archivosAProcesar/directorioDePruebaConDosZip");
-		
-		 Files.move(origen,destino,REPLACE_EXISTING);
+	private void volverArchivoAlOrigen(String directorioOrigen, String directorioDestino)
+			throws IOException {
+		Path origen = Paths.get(directorioOrigen);
+		Path destino = Paths.get(directorioDestino);
+
+		Files.move(origen, destino, REPLACE_EXISTING);
 	}
 }

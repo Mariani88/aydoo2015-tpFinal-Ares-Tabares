@@ -29,17 +29,15 @@ public class DaemonTest {
 		Thread.sleep(1000);
 		Assert.assertTrue(Files.size(reporte) > 0);
 
-		volverArchivoAlOrigen(DIRECTORIO_CON_UN_ZIP);
+		volverArchivoAlOrigen("archivosProcesados/CSVConUnaLinea.zip", DIRECTORIO_CON_UN_ZIP+"/CSVConUnaLinea.zip");
 	}
 
 	@Test
-	public void cuandoSePasaUnaListaDeDosArchivosElProcesadorOnDemandDebeGenerarDosArchivosDeSalidaConTamanoMayorACero()
+	public void cuandoSePasaUnaListaDeDosArchivosAlProcesarloEnModoDeamonDebeGenerarDosArchivosDeSalidaConTamanoMayorACero()
 			throws IOException, InterruptedException {
 
 		ProcesadorEstadistico procesadorEstadistico = new ProcesadorEstadistico();
-		Daemon daemon = new Daemon(
-				DIRECTORIO_CON_DOS_ZIPS,
-				procesadorEstadistico);
+		Daemon daemon = new Daemon(DIRECTORIO_CON_DOS_ZIPS,procesadorEstadistico);
 
 		Path reporteCSVConTresLineas = Paths.get("reportes/CSVConTresLineas.salida.yml");
 		Path reporteCSVConUnaLinea = Paths.get("reportes/CSVConUnaLinea.salida.yml");
@@ -50,14 +48,16 @@ public class DaemonTest {
 		Assert.assertTrue(Files.size(reporteCSVConTresLineas) > 0);
 		Assert.assertTrue(Files.size(reporteCSVConUnaLinea) > 0);
 
-		volverArchivoAlOrigen(DIRECTORIO_CON_DOS_ZIPS);
+		volverArchivoAlOrigen("archivosProcesados/CSVConTresLineas.zip",DIRECTORIO_CON_DOS_ZIPS+"/CSVConTresLineas.zip");
+		volverArchivoAlOrigen("archivosProcesados/CSVConUnaLinea.zip",DIRECTORIO_CON_DOS_ZIPS+"/CSVConUnaLinea.zip");
 	}
 
-	private void volverArchivoAlOrigen(String directorioDestino)
+	private void volverArchivoAlOrigen(String directorioOrigen, String directorioDestino)
 			throws IOException {
-		Path origen = Paths.get("archivosProcesados");
+		Path origen = Paths.get(directorioOrigen);
 		Path destino = Paths.get(directorioDestino);
 
 		Files.move(origen, destino, REPLACE_EXISTING);
 	}
+	
 }
