@@ -6,4 +6,7 @@ Recorrido mas realizado:
     id origen: 6
     id destino: 3
 Tiempo promedio de uso: 7.0
-tiempo insumido:1.179 segundos
+Bicicletas mas tiempo usadas:
+    id: 403
+Tiempo de la bicicleta mas utilizada: 420
+tiempo insumido:1.297 segundos

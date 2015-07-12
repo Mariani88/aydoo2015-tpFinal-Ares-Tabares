@@ -63,10 +63,24 @@ public class EstadisticaBicicletaMasTiempoUsada extends Estadistica{
 			
 		return listaDeResultados;
 	}
-	@Override
-	protected List<String> generarListaEnFormatoYML(List<String> lista) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public List<String> generarListaEnFormatoYML(List<String> lista) {
+
+		List<String> listaFormateada = new LinkedList<String>();
+		listaFormateada.add(nombreEstadistica + ":");
+		
+		for (String string : lista){
+			
+			listaFormateada.add("    id: " + string);	
+		} 
+		
+		listaFormateada.add("Tiempo de la bicicleta mas utilizada: "+obtenerTiempoMaximoEnSegundos());
+
+		return listaFormateada;	
 	}
 
+
+	private int obtenerTiempoMaximoEnSegundos() {
+		return this.maximo * 60;
+	}
 }

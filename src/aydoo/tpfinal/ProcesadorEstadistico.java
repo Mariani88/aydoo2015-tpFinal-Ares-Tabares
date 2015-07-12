@@ -230,6 +230,7 @@ public class ProcesadorEstadistico {
         this.estadisticasDisponibles.add(new EstadisticaBicicletaMenosUsada());
         this.estadisticasDisponibles.add(new EstadisticaRecorridoMasRealizado());
         this.estadisticasDisponibles.add(new EstadisticaTiempoPromedioDeUso());
+        this.estadisticasDisponibles.add(new EstadisticaBicicletaMasTiempoUsada());
     }
 
     private void crearDirectoriosDeSalida(){

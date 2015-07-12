@@ -1,9 +1,13 @@
 Bicicletas mas usadas:
     id: 403
 Bicicletas menos usadas:
-    id: 403
+    id: 393
+    id: 443
 Recorrido mas realizado:
     id origen: 6
     id destino: 3
-Tiempo promedio de uso: 7.0
-tiempo insumido:0.062 segundos
+Tiempo promedio de uso: 9.0
+Bicicletas mas tiempo usadas:
+    id: 403
+Tiempo de la bicicleta mas utilizada: 840
+tiempo insumido:1.328 segundos
