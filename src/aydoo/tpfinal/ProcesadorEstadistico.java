@@ -72,9 +72,7 @@ public class ProcesadorEstadistico {
     }
 
     private void procesarArchivoZip(String rutaAZip) {
-    	
         ZipFile zip;
-        
         try {
             zip = new ZipFile(rutaAZip);
             Enumeration<? extends ZipEntry> contenidoDelZip = zip.entries();
@@ -92,7 +90,6 @@ public class ProcesadorEstadistico {
             }
             zip.close();
         }
-
         catch (IOException e) {
             e.printStackTrace();
         }
@@ -117,10 +114,8 @@ public class ProcesadorEstadistico {
 						lineaSeparadaPorComas[7], lineaSeparadaPorComas[8]);
 				listaDeRecorridos.add(recorrido);
 			}
-            
 			volcarDatosEstadisticos(listaDeRecorridos, scanner);
         }
-       
         scanner.close();
     }
 
@@ -131,7 +126,6 @@ public class ProcesadorEstadistico {
 			for (Estadistica estadistica: this.estadisticasDisponibles){
 				estadistica.generarEstadistica(listaDeRecorridos);
 			}
-			
 			listaDeRecorridos.clear();
 		}
 	}
@@ -139,7 +133,6 @@ public class ProcesadorEstadistico {
   
 
 	private List<String> generarReporteEstadisticas(){
-        
 		List<String> contenidoEnFormatoYML = new ArrayList<String>();
         
 		for (Estadistica estadistica: this.estadisticasDisponibles){
@@ -149,7 +142,6 @@ public class ProcesadorEstadistico {
         	
             contenidoEnFormatoYML.addAll( listaEnFormatoYML );
             }
-        
         return contenidoEnFormatoYML;
     }
 
@@ -159,7 +151,6 @@ public class ProcesadorEstadistico {
     	double tiempo  = (System.currentTimeMillis() - tiempoInicial)/1000 ; 
     	
     	contenidoEnFormatoYML.add("tiempo insumido:"+ tiempo+ " segundos");
-        
         try {
             Files.write(archivo, contenidoEnFormatoYML, StandardCharsets.UTF_8);    
             System.out.println ("tiempo insumido:" + tiempo+ " segundos");
@@ -230,7 +221,6 @@ public class ProcesadorEstadistico {
                 }
             }
         }
-
         return listaDeZips;
     }
 
@@ -253,7 +243,6 @@ public class ProcesadorEstadistico {
                 e.printStackTrace();
             }
         }
-
         if(!Files.exists(pathADirectorioDeSalidaDeReportes)){
             try {
                 Files.createDirectory(pathADirectorioDeSalidaDeReportes);
